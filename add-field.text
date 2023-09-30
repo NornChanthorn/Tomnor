@@ -1,0 +1,187 @@
+ALTER TABLE `contact_groups` ADD `type` ENUM('supplier','customer') NOT NULL DEFAULT 'customer' AFTER `name`;
+
+UPDATE invoices i JOIN loans l ON i.loan_id = l.id SET i.transaction_id= l.transaction_id where i.type='leasing';
+INSERT INTO `permissions` (`id`, `name`, `group`, `display_name`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'report.cash-recieved', 'Report', 'Cash Recieved', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00')
+ALTER TABLE `contacts` ADD `balance` DECIMAL(18.4) NOT NULL AFTER `credit_limit`;
+ALTER TABLE `invoices` CHANGE `type` `type` ENUM('sell','purchase','leasing','cob','leasing-dp','advance','opening_balance' ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'cob = Client Opening Balance leasing-dp= leasing-down-payment (ldp)';
+ALTER TABLE `invoices` ADD `parent_id` INT(10) NULL DEFAULT NULL AFTER `transaction_id`;
+
+UPDATE transactions as t JOIN contacts as c ON t.contact_id = c.id SET t.contact_group_id = c.contact_group_id;
+
+ALTER TABLE `invoices` ADD `wave` DECIMAL(18.4) NOT NULL DEFAULT '0' AFTER `penalty`;
+
+ALTER TABLE `schedules` ADD `schedule_reference_id` INT(10) NULL DEFAULT NULL AFTER `loan_id`;
+
+INSERT INTO `permissions` (`id`, `name`, `group`, `display_name`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'loan.delay-schedule', 'Delay Schedule', 'Add', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00');
+INSERT INTO `permissions` (`id`, `name`, `group`, `display_name`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'loan.approved-delay-schedule', 'Delay Schedule', 'Approval', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00');
+
+CREATE TABLE `schedule_histories` (
+  `id` bigint UNSIGNED NOT NULL,
+  `loan_id` bigint UNSIGNED NOT NULL,
+  `schedule_reference_id` int DEFAULT NULL,
+  `payment_date` date NOT NULL,
+  `principal` double NOT NULL,
+  `interest` double(8,2) DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  `outstanding` double DEFAULT NULL,
+  `penalty` double DEFAULT NULL,
+  `paid_date` date DEFAULT NULL,
+  `paid_principal` double DEFAULT NULL,
+  `paid_interest` decimal(8,2) DEFAULT NULL,
+  `paid_total` double DEFAULT NULL,
+  `paid_penalty` double DEFAULT NULL,
+  `paid_status` tinyint(1) NOT NULL DEFAULT '0',
+  `discount_status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE `schedule_histories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `schedules_loan_id_foreign` (`loan_id`);
+  ALTER TABLE `schedule_histories`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `schedule_histories`
+  ADD CONSTRAINT `schedule_histories_ibfk_1` FOREIGN KEY (`loan_id`) REFERENCES `loans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+CREATE TABLE `schedule_references` (
+  `id` int NOT NULL,
+  `installment` int DEFAULT NULL,
+  `frequency` int DEFAULT NULL,
+  `loan_id` int DEFAULT NULL,
+  `type` enum('de','ip') DEFAULT NULL COMMENT 'de = Delay Schedule \r\nip = Interest Payment',
+  `note` text,
+  `is_approved` tinyint DEFAULT '0',
+  `approved_by` int DEFAULT NULL,
+  `approved_date` date DEFAULT NULL,
+  `approved_note` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `schedule_references`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `schedule_references`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;
+/// Last Update  for rtn
+
+ALTER TABLE `loans` CHANGE `product_id` `product_id` INT UNSIGNED NULL DEFAULT NULL;
+ALTER TABLE `loans` CHANGE `user_id` `user_id` INT UNSIGNED NULL DEFAULT NULL;
+ALTER TABLE `loans` CHANGE `staff_id` `staff_id` INT UNSIGNED NULL DEFAULT NULL;
+ALTER TABLE `loans` ADD `type` ENUM('cash','product') NOT NULL DEFAULT 'product' AFTER `id`;
+
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `client_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `client_id` bigint UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+CREATE TABLE `oauth_clients` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` bigint UNSIGNED NOT NULL,
+  `client_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
+
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+
+ALTER TABLE `oauth_clients`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+COMMIT;
+
+
+CREATE TABLE `collaterals` (
+  `id` int UNSIGNED NOT NULL,
+  `type_id` int UNSIGNED DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `loan_id` int UNSIGNED DEFAULT NULL,
+  `value` decimal(18,4) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `photo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `files` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `serial_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `model_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `model_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `collaterals`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `collateral_id_index` (`id`);
+ALTER TABLE `collaterals`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
+INSERT INTO `permissions` (`id`, `name`, `group`, `display_name`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'loan-cash.browse', 'Loan Cash', 'Browse', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'loan-cash.add', 'Loan Cash', 'Add', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'loan-cash.edit', 'Loan Cash', 'Edit', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'loan-cash.delete', 'Loan Cash', 'Delete', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'loan-cash.reject', 'Loan Cash', 'Reject Loan', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'),(NULL, 'loan-cash.approval', 'Loan Cash', 'Approval', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00');
+INSERT INTO `permissions` (`id`, `name`, `group`, `display_name`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'collateral.browse', 'Collateral', 'Browse', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'collateral.add', 'Collateral', 'Add', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'collateral.edit', 'Collateral', 'Edit', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'collateral.delete', 'Collateral', 'Delete', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00');
+INSERT INTO `permissions` (`id`, `name`, `group`, `display_name`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'collateral_type.browse', 'Collateral Type', 'Browse', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'collateral_type.add', 'Collateral Type', 'Add', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00'), (NULL, 'collateral_type.edit', 'Collateral Type', 'Edit', NULL, '2020-07-09 00:00:00', '2020-07-09 00:00:00');
+
+
+//Upated 18/09/2021
+
+ALTER TABLE `invoices` CHANGE `loan_id` `loan_id` INT UNSIGNED NULL DEFAULT NULL;

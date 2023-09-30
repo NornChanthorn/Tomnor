@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Dangrek&family=Koulen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Battambang&display=swap');
+body{
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,'Dangrek';
+    font-size: 16px; 
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+}
+.invoice{
+    margin: 0 auto; 
+    padding: 40px;
+    width: 800px;
+    border: solid 1px rgb(0, 0, 0);
+    border-radius: 5px;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: '-apple-system','BlinkMacSystemFont',"Segoe UI",'Roboto',"Helvetica Neue",Arial,sans-serif,'Koulen';
+}
+h3{
+    font-size: 22px;
+}
+h5{
+    font-size: 18px;
+}
+p{
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+hr{
+    margin-top: 0.1rem;
+    margin-bottom: 0.5rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+table{
+    font-family: 'Dangrek', sans-serif; font-size: 14px; 
+    width: 100%;
+}
+table td,th {
+    padding: 0.50rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+.header{
+    margin-top: 0; 
+    margin-bottom: 10px; 
+}
+.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height:120px;
+}
+.title{
+    margin-top: 15px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+ 
+}
+.invoice-title:after {
+    content:'';
+    position:absolute;
+    left:0;right:0;
+    top:100%;
+    margin: 0 auto;
+    width:13%;
+    height:2px;
+    background:rgb(0, 0, 0);
+}
+.border-right{
+    border-right: 2px solid #000000!important;
+}
+.tbg-header {
+    background-color:#000000 !important;
+    color: rgb(255, 255, 255) !important;
+}
+.tbg-total {
+    background-color: #000000 !important;
+    color: rgb(255, 255, 255) !important;
+}
+.footer{
+    text-align: center;
+    margin-top: 100px;
+    font-family: "Battambang",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+.footer img{
+    width: 25px;
+    margin-bottom: 10px;
+}
+.box-footer {
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+    width: 100%;
+    height:  auto;
+}
+
+.box-footer:after {
+    background: linear-gradient(to right, #bcbcbc 25%,#ffcd02 25%, #ffcd02 50%, #000000 50%, #000000 75%, #bcbcbc 75%);
+    position: absolute;
+    content: '';
+    height: 3px;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+@media print{
+    body {
+        font-family: 'Dangrek',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        font-size: 16px;
+    }
+    .invoice { 
+        width:100%;   
+        border: solid 0px rgb(0, 0, 0);
+        border-radius: 5px;
+    }
+    table{
+        width: 100%;
+    }
+    .tbg-header {
+        background-color:#000000 !important;
+        color: rgb(255, 255, 255) !important;
+    }
+    .tbg-total {
+        background-color: #000000 !important;
+        color: rgb(255, 255, 255) !important;
+    }
+    .footer{
+        position: fixed;
+        height: 70px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin-bottom: 30px;
+    }
+}
