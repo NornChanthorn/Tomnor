@@ -1,0 +1,1 @@
+[2022-07-10 11:44:49] production.EMERGENCY: File:/var/www/rtn168.gbsmallbiz.com/app/Http/Controllers/LoanController.phpLine:724Message:Undefined variable: transaction  

@@ -1,0 +1,82 @@
+[2023-09-28 23:12:47] production.ERROR: Key path "file://C:\wamp64\www\rtn168\storage\oauth-private.key" does not exist or is not readable {"exception":"[object] (LogicException(code: 0): Key path \"file://C:\\wamp64\\www\tn168\\storage\\oauth-private.key\" does not exist or is not readable at C:\\wamp64\\www\tn168\\vendor\\league\\oauth2-server\\src\\CryptKey.php:48)
+[stacktrace]
+#0 C:\\wamp64\\www\tn168\\vendor\\laravel\\passport\\src\\PassportServiceProvider.php(243): League\\OAuth2\\Server\\CryptKey->__construct('file://C:\\\\wamp6...', NULL, false)
+#1 C:\\wamp64\\www\tn168\\vendor\\laravel\\passport\\src\\PassportServiceProvider.php(209): Laravel\\Passport\\PassportServiceProvider->makeCryptKey('private')
+#2 C:\\wamp64\\www\tn168\\vendor\\laravel\\passport\\src\\PassportServiceProvider.php(99): Laravel\\Passport\\PassportServiceProvider->makeAuthorizationServer()
+#3 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(776): Laravel\\Passport\\PassportServiceProvider->Laravel\\Passport\\{closure}(Object(Illuminate\\Foundation\\Application), Array)
+#4 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(658): Illuminate\\Container\\Container->build(Object(Closure))
+#5 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(609): Illuminate\\Container\\Container->resolve('League\\\\OAuth2\\\\S...', Array)
+#6 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(759): Illuminate\\Container\\Container->make('League\\\\OAuth2\\\\S...', Array)
+#7 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(912): Illuminate\\Foundation\\Application->make('League\\\\OAuth2\\\\S...')
+#8 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(840): Illuminate\\Container\\Container->resolveClass(Object(ReflectionParameter))
+#9 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(807): Illuminate\\Container\\Container->resolveDependencies(Array)
+#10 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(658): Illuminate\\Container\\Container->build('Laravel\\\\Passpor...')
+#11 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(609): Illuminate\\Container\\Container->resolve('Laravel\\\\Passpor...', Array)
+#12 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(759): Illuminate\\Container\\Container->make('Laravel\\\\Passpor...', Array)
+#13 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(233): Illuminate\\Foundation\\Application->make('Laravel\\\\Passpor...')
+#14 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(833): Illuminate\\Routing\\Route->getController()
+#15 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(794): Illuminate\\Routing\\Route->controllerMiddleware()
+#16 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(151): Illuminate\\Routing\\Route->gatherMiddleware()
+#17 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(114): Illuminate\\Foundation\\Console\\RouteListCommand->getMiddleware(Object(Illuminate\\Routing\\Route))
+#18 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(86): Illuminate\\Foundation\\Console\\RouteListCommand->getRouteInformation(Object(Illuminate\\Routing\\Route))
+#19 [internal function]: Illuminate\\Foundation\\Console\\RouteListCommand->Illuminate\\Foundation\\Console\\{closure}(Object(Illuminate\\Routing\\Route), 0)
+#20 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Collection.php(1034): array_map(Object(Closure), Array, Array)
+#21 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(87): Illuminate\\Support\\Collection->map(Object(Closure))
+#22 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(75): Illuminate\\Foundation\\Console\\RouteListCommand->getRoutes()
+#23 [internal function]: Illuminate\\Foundation\\Console\\RouteListCommand->handle()
+#24 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#25 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#26 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#27 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#28 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#29 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#30 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#31 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Application.php(1021): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#32 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Application.php(275): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Foundation\\Console\\RouteListCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#33 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#34 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#35 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#36 C:\\wamp64\\www\tn168\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#37 {main}
+"} 
+[2023-09-28 23:12:58] production.ERROR: Key path "file://C:\wamp64\www\rtn168\storage\oauth-private.key" does not exist or is not readable {"exception":"[object] (LogicException(code: 0): Key path \"file://C:\\wamp64\\www\tn168\\storage\\oauth-private.key\" does not exist or is not readable at C:\\wamp64\\www\tn168\\vendor\\league\\oauth2-server\\src\\CryptKey.php:48)
+[stacktrace]
+#0 C:\\wamp64\\www\tn168\\vendor\\laravel\\passport\\src\\PassportServiceProvider.php(243): League\\OAuth2\\Server\\CryptKey->__construct('file://C:\\\\wamp6...', NULL, false)
+#1 C:\\wamp64\\www\tn168\\vendor\\laravel\\passport\\src\\PassportServiceProvider.php(209): Laravel\\Passport\\PassportServiceProvider->makeCryptKey('private')
+#2 C:\\wamp64\\www\tn168\\vendor\\laravel\\passport\\src\\PassportServiceProvider.php(99): Laravel\\Passport\\PassportServiceProvider->makeAuthorizationServer()
+#3 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(776): Laravel\\Passport\\PassportServiceProvider->Laravel\\Passport\\{closure}(Object(Illuminate\\Foundation\\Application), Array)
+#4 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(658): Illuminate\\Container\\Container->build(Object(Closure))
+#5 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(609): Illuminate\\Container\\Container->resolve('League\\\\OAuth2\\\\S...', Array)
+#6 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(759): Illuminate\\Container\\Container->make('League\\\\OAuth2\\\\S...', Array)
+#7 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(912): Illuminate\\Foundation\\Application->make('League\\\\OAuth2\\\\S...')
+#8 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(840): Illuminate\\Container\\Container->resolveClass(Object(ReflectionParameter))
+#9 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(807): Illuminate\\Container\\Container->resolveDependencies(Array)
+#10 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(658): Illuminate\\Container\\Container->build('Laravel\\\\Passpor...')
+#11 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(609): Illuminate\\Container\\Container->resolve('Laravel\\\\Passpor...', Array)
+#12 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(759): Illuminate\\Container\\Container->make('Laravel\\\\Passpor...', Array)
+#13 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(233): Illuminate\\Foundation\\Application->make('Laravel\\\\Passpor...')
+#14 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(833): Illuminate\\Routing\\Route->getController()
+#15 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(794): Illuminate\\Routing\\Route->controllerMiddleware()
+#16 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(151): Illuminate\\Routing\\Route->gatherMiddleware()
+#17 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(114): Illuminate\\Foundation\\Console\\RouteListCommand->getMiddleware(Object(Illuminate\\Routing\\Route))
+#18 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(86): Illuminate\\Foundation\\Console\\RouteListCommand->getRouteInformation(Object(Illuminate\\Routing\\Route))
+#19 [internal function]: Illuminate\\Foundation\\Console\\RouteListCommand->Illuminate\\Foundation\\Console\\{closure}(Object(Illuminate\\Routing\\Route), 0)
+#20 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Collection.php(1034): array_map(Object(Closure), Array, Array)
+#21 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(87): Illuminate\\Support\\Collection->map(Object(Closure))
+#22 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\RouteListCommand.php(75): Illuminate\\Foundation\\Console\\RouteListCommand->getRoutes()
+#23 [internal function]: Illuminate\\Foundation\\Console\\RouteListCommand->handle()
+#24 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#25 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#26 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#27 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#28 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#29 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#30 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#31 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Application.php(1021): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#32 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Application.php(275): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Foundation\\Console\\RouteListCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#33 C:\\wamp64\\www\tn168\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#34 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#35 C:\\wamp64\\www\tn168\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#36 C:\\wamp64\\www\tn168\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#37 {main}
+"} 
