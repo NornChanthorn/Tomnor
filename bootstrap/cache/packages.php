@@ -1,98 +1,98 @@
 <?php return array (
-  'beyondcode/laravel-dump-server' => 
+  'beyondcode/laravel-dump-server' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
     ),
   ),
-  'fideloper/proxy' => 
+  'fideloper/proxy' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
-  'intervention/image' => 
+  'intervention/image' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Intervention\\Image\\ImageServiceProvider',
     ),
-    'aliases' => 
+    'aliases' =>
     array (
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
-  'kyslik/column-sortable' => 
+  'kyslik/column-sortable' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Kyslik\\ColumnSortable\\ColumnSortableServiceProvider',
     ),
   ),
-  'laravel/nexmo-notification-channel' => 
+  'laravel/nexmo-notification-channel' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Illuminate\\Notifications\\NexmoChannelServiceProvider',
     ),
   ),
-  'laravel/passport' => 
+  'laravel/passport' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Passport\\PassportServiceProvider',
     ),
   ),
-  'laravel/slack-notification-channel' => 
+  'laravel/slack-notification-channel' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Illuminate\\Notifications\\SlackChannelServiceProvider',
     ),
   ),
-  'laravel/tinker' => 
+  'laravel/tinker' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'laravelcollective/html' => 
+  'laravelcollective/html' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Collective\\Html\\HtmlServiceProvider',
     ),
-    'aliases' => 
+    'aliases' =>
     array (
       'Form' => 'Collective\\Html\\FormFacade',
       'Html' => 'Collective\\Html\\HtmlFacade',
     ),
   ),
-  'milon/barcode' => 
+  'milon/barcode' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Milon\\Barcode\\BarcodeServiceProvider',
     ),
-    'aliases' => 
+    'aliases' =>
     array (
       'DNS1D' => 'Milon\\Barcode\\Facades\\DNS1DFacade',
       'DNS2D' => 'Milon\\Barcode\\Facades\\DNS2DFacade',
     ),
   ),
-  'nesbot/carbon' => 
+  'nesbot/carbon' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
   'nunomaduro/collision' => 
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
