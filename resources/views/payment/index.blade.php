@@ -5,6 +5,7 @@
 @section('content')
   <main class="app-content">
     <div class="tile">
+       
       <h3 class="page-heading">{{ trans('app.payment') }}</h3>
       @include('partial/flash-message')
       <div class="card">
@@ -24,7 +25,7 @@
               </div>
               @endif
               {{-- End date --}}
-              
+
               <div class="col-md-3">
                 <label for="start_date">{{ trans('app.date') }}</label>
                 <input type="text" name="date" id="date" class="form-control date-picker" readonly placeholder="{{ trans('app.date_placeholder') }}" value="{{ request('date') }}">
@@ -48,7 +49,7 @@
       </div>
 
       <br>
-      @include('partial.item-count-label') 
+      @include('partial.item-count-label')
       <a href="{{ url('repayment/list') }}" class="btn btn-sm btn-success pull-right mb-1">{{ trans('app.print') }}</a>
       <div class="table-responsive resize-w">
         <table class="table table-bordered table-hover">
@@ -75,8 +76,8 @@
               <th>
                 {{ trans('app.icloud') }}
               </th>
-        
-             
+
+
             </tr>
           </thead>
           <tbody>
@@ -94,8 +95,8 @@
                         {{ trans('app.pay_off') }}
                       </a>
                   </div>
-                    
-              
+
+
                   @endif
                 </td>
                 <td>
@@ -117,7 +118,7 @@
                 <td>
                   <b>
                       {{ $loan->late_payment }}
-                    
+
                   </b>
                 </td>
                 <td>
@@ -136,7 +137,7 @@
                     @else
                         {{ trans('app.n/a') }}
                     @endif
-                      
+
                   @endforeach
                 </td>
                 <td>

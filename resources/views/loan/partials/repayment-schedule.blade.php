@@ -1,4 +1,5 @@
 <div class="tab-pane active table-responsive" role="tabpanel">
+
     <table class="table table-hover table-bordered">
         @php $isFlatInterestSchedule = ($loan->schedule_type == PaymentScheduleType::FLAT_INTEREST) @endphp
         <thead>

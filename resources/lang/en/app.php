@@ -227,6 +227,7 @@ return [
     'payoff_amount' => 'Payoff Amount',
     'pay_off' => 'Pay Off',
     'payment' => 'Payment',
+    'pay_depreciation' => 'Pay Depreciation',
     'payment_amount' => 'Payment Amount',
     'payment_date' => 'Payment Date',
     'payment_in_month' => 'Payment in Month',

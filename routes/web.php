@@ -207,6 +207,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/list', 'RepaymentController@listRepayment')->name('list');
     Route::get('{id}/{repayType}', 'RepaymentController@show')->name('show');
     Route::post('{id}/save', 'RepaymentController@save')->name('save');
+    Route::get('/payDeposite', function(){
+        $title = trans('app.pay_deposit');
+        return view('payment.depreciation-form', compact('title'));
+    })->name('payDeposite');
   });
 
   // Payment
