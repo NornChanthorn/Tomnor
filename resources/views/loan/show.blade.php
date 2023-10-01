@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8 col-lg-7">
-                    <h5> 
+                    <h5>
                         <strong>
                             {{ $loan->client->name }}
                         </strong>
@@ -120,6 +120,10 @@
                                     </a>
                                 @endif
                                 @if (isAdmin() &&  $loan->status == LoanStatus::ACTIVE || Auth::user()->can('loan.pay') && $loan->status == LoanStatus::ACTIVE)
+                                    {{-- Pay Deposit --}}
+                                    <a href="{{ route('repayment.payDeposite', [$loan->id, RepayType::PAY_DEPOSIT]) }}" class="btn btn-success mb-1">
+                                        <i class="fa fa-money"></i>  {{ trans('app.pay_deposit') }}
+                                    </a>
                                     {{-- Simple repayment --}}
                                     <a href="{{ route('repayment.show', [$loan->id, RepayType::REPAY]) }}" class="btn btn-success mb-1">
                                         <i class="fa fa-money"></i>  {{ trans('app.repay') }}

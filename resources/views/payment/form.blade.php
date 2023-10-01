@@ -8,6 +8,7 @@
 @section('content')
     <main class="app-content">
         <div class="tile">
+            <p>It's from Payment/form blade</p>
             <h3 class="page-heading">{{ $title  }}</h3>
             @include('partial/flash-message')
             <form method="post" id="payment-form" class="no-auto-submit" action="{{ route('repayment.save', $loan->id) }}" enctype="multipart/form-data">
@@ -16,7 +17,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5>{{ trans('app.client_information') }}</h5>
-                        
+
                         <div class="row mt-4">
                             <div class="col-md-4">
                                 <p>{{ trans('app.client_name') }} : @include('partial.client-detail-link', ['client' => $loan->client])</p>
@@ -189,7 +190,7 @@
                                             <label for="">{{ trans('app.interest') }}</label>
                                             <input type="text" class="form-control decimal-input" name="interest" id="interest" value="{{ $payoffInterest }}">
                                         </div>
-                                     
+
                                         <div class="col-md-4 form-group">
                                             <label for="">{{ trans('app.discount') }}{{ trans('app.interest') }} %</label>
                                             <input type="text" class="form-control decimal-input" name="discount_interest" id="discount_interest" value="0">
@@ -198,8 +199,8 @@
                                             <label for="">{{ trans('app.interest_after_discount') }}</label>
                                             <input type="text" class="form-control decimal-input" name="interest_after_discount" id="interest_after_discount" value="{{ $payoffInterest  }}" readonly>
                                         </div>
-                                      
-                                       
+
+
                                         <div class="col-md-4 form-group">
                                             <label for="">{{ trans('app.penalty_amount') }}</label>
                                             <input type="text" class="form-control decimal-input" name="penalty_amount" id="penalty_amount" value="0">
@@ -249,7 +250,7 @@
                                             <input type="text" class="form-control" name="note" id="note" value="{{ old('note') }}">
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label for="photo" class="control-label">
@@ -257,7 +258,7 @@
                                     </label>
                                     <input type="file" name="receipt_photo" id="photo" class="form-control" accept=".jpg, .jpeg, .png">
                                 </div>
-                                
+
                                 <div class="col-lg-12 text-right">
                                     <button type="submit" class="btn btn-success" onclick="confirmFormSubmission($('#payment-form'))">
                                         {{ $repayLabel }}
@@ -267,7 +268,7 @@
                         @endif
                     </div>
                 </div>
-                
+
             </form>
             <div class="card mb-4">
                 <div class="card-body">
@@ -289,7 +290,7 @@
                                     <th>
                                         {{ trans('app.payment_date') }}
                                     </th>
-                        
+
                                     <th>
                                         {{ trans('app.payment_amount') }}
                                     </th>

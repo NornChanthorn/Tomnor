@@ -297,7 +297,7 @@
                         <table>
                             <tbody>
                                 {{-- Sponsor info --}}
-                        
+
                                     <tr>
                                         <td style="width: 50%">{{ trans('app.sponsor_name') }}</td>
                                         <td>
@@ -306,7 +306,7 @@
                                     </tr>
                                     <tr>
                                         <td style="width: 50%">
-                                            {{ trans('app.id_card_number') }} 
+                                            {{ trans('app.id_card_number') }}
                                         </td>
                                         <td>
                                             :
@@ -325,7 +325,7 @@
                                             @endif
                                         </td>
                                     </tr>
-                              
+
                             </tbody>
                         </table>
                     </div>
@@ -367,27 +367,27 @@
                                         $ {{ decimalNumber($item->unit_price *$item->quantity,true) }}
                                     </td>
                                 </tr>
-                                    
+
                             @endforeach
                             <tr>
                                 <td rowspan="3" colspan="2" class="p-5">
                                     {{ trans('app.duration') }} : {{ $loan->installment . ' ' . trans('app.month') }} <br>
-                                    {{ __("ភាគរយបង់មុន") }} : {{ decimalNumber($depreciation_amount, true). ' %' }}
+                                    Depreciation amount  {{ __("ភាគរយបង់មុន") }} : {{ decimalNumber($depreciation_amount, true). ' %' }}
                                 </td>
-                                <td colspan="2">{{ trans('app.product_price') }}</td>
+                                <td colspan="2">Loan Amount {{ trans('app.product_price') }}</td>
                                 <td> $ {{ decimalNumber($loan->loan_amount, true) }}</td>
                             </tr>
                             <tr>
-                                <td colspan="2">{{ trans('app.depreciation_amount') }}</td>
+                                <td colspan="2">Depreciation amount {{ trans('app.depreciation_amount') }}</td>
                                 <td> $ {{ decimalNumber($loan->depreciation_amount, true) }}</td>
                             </tr>
                             <tr>
-                                <td colspan="2">{{ trans('app.loan_amount') }}</td>
+                                <td colspan="2">Down payment amount {{ trans('app.loan_amount') }}</td>
                                 <td> $ {{ decimalNumber($loan->down_payment_amount, true) }}</td>
                             </tr>
-                           
+
                         </tbody>
-                      
+
                     </table>
                 </div>
                 <div class="table-responsive">
@@ -488,7 +488,7 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 
 </html>

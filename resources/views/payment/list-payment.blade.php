@@ -25,7 +25,7 @@
                   </div>
                   @endif
                   {{-- End date --}}
-                  
+
                   <div class="col-md-3">
                     <label for="start_date">{{ trans('app.date') }}</label>
                     <input type="text" name="date" id="date" class="form-control date-picker" readonly placeholder="{{ trans('app.date_placeholder') }}" value="{{ request('date') }}">
@@ -47,9 +47,9 @@
             </form>
           </div>
         </div>
-  
+
         <br>
-        @include('partial.item-count-label') 
+        @include('partial.item-count-label')
         <button onclick="window.print()" class="btn btn-sm btn-success pull-right mb-1">{{ trans('app.print') }}</button>
       </div>
 
@@ -76,14 +76,14 @@
               <th style="width: 10%">
                 {{ trans('app.note') }}
               </th>
-    
+
 
             </tr>
           </thead>
           <tbody>
             @foreach ($loans as $loan)
-              @php 
-                $amountToPay = $loan->total_amount - $loan->total_paid_amount; 
+              @php
+                $amountToPay = $loan->total_amount - $loan->total_paid_amount;
                 $count_late_date = date_diff(date_create($loan->schedules[0]->payment_date), date_create(now()))->format('%a')
               @endphp
                 <tr>
@@ -122,22 +122,22 @@
                       @else
                           {{ trans('app.n/a') }}
                       @endif
-                        
+
                     @endforeach
                   </td>
                   <td>
                     {{ $loan->note ?? trans('app.n/a') }}
                   </td>
                   <td>
-                    
+
                   </td>
                 </tr>
-            
+
             @endforeach
           </tbody>
         </table>
 
-        
+
       </div>
     </div>
   </main>
