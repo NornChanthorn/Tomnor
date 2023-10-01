@@ -14,12 +14,14 @@ use App\Constants\PaymentScheduleType;
 use App\Constants\Message;
 use App\Constants\StockTransaction;
 use App\Constants\StockType;
+use App\Depreciation;
 use App\Http\Requests\LoanRequest;
 use App\Models\AgentCommission;
 use App\Models\Branch;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Loan;
+use App\DownPayment;
 use App\Models\LoanProductDetail;
 use App\Models\Product;
 use App\Models\Schedule;
@@ -896,7 +898,8 @@ class LoanController extends Controller
         'alert-type' => 'warning'
       ], 403);
     }
-    return view('loan/contract', compact('loan'));
+    $data =Depreciation::with('invoice')->get();
+    return view('loan/contract', compact('loan', 'data'));
   }
 
   /**

@@ -390,6 +390,47 @@
 
                     </table>
                 </div>
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered">
+                        <h4 class="text-center">
+                        {{ trans('app.payment_schedule') }}
+                        </h4>
+                        <thead>
+                            <tr  style="background-color: #b4f4ff">
+                                <th style="width:7%;">{{ trans('app.no_sign') }}</th>
+                                <th style="width:30%;">{{ trans('app.payment_date') }}</th>
+                                <th style="width:10%;">{{ trans('app.amount') }}</th>
+                                <th  style="width:10%;">{{ trans('app.payment_method') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $data)
+                                <tr>
+                                    <td class="text-center">
+                                        {{ $key+1 }}
+                                    </td>
+                                    <td class="text-center">
+                                           {{ $data->invoice->id }}
+                                    </td>
+                                    <td  class="text-center">
+                                        $ {{decimalNumber ( $data->DepreciationAmount) }}
+                                    </td>
+                                    <td  class="text-center">
+                                         {{ $data->payment_method }}
+                                    </td>
+                                </tr>
+                                    
+                            @endforeach
+                            <tr  style="background-color:#acffbf">
+                                <td colspan="2" class=" text-center ">{{ trans('app.balance') }}</td>
+                                <td colspan="2"> $ {{ decimalNumber($loan->loan_amount, true) }}</td>
+                                 
+                            </tr>
+                           
+                        </tbody>
+                      
+                    </table>
+                </div>
                 <div class="table-responsive">
                     <h4 class="text-center">
                         {{ trans('app.payment_schedule') }}
