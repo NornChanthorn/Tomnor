@@ -26,6 +26,7 @@ class CreateLoansTable extends Migration
             $table->string('account_number_append')->nullable();
             $table->double('loan_amount');
             $table->double('depreciation_amount')->nullable();
+            $table->double('depreciation_percentage')->nullable();
             $table->double('down_payment_amount')->nullable();
             $table->double('extra_fee')->nullable();
             $table->float('interest_rate')->nullable();

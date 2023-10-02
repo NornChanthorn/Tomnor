@@ -364,6 +364,15 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
               <input type="text" name="down_payment_amount" id="down_payment_amount" class="form-control decimal-input"
                 value="{{ old('down_payment_amount') ?? $loan->down_payment_amount }}" readonly {{ $disabledFormType }}>
             </div>
+            
+            {{-- Depreciation Percentage --}}
+            <div class="col-lg-4 form-group">
+              <label for="depreciation_percentage" class="depreciation_percentage">
+                {{ trans('app.down_payment_amount') }} (%)
+              </label>
+              <input type="text" name="depreciation_percentage" id="depreciation_percentage" class="form-control decimal-input"
+                value="{{ old('depreciation_percentage') ?? $loan->depreciation_percentage }}" readonly {{ $disabledFormType }}>
+            </div>
 
             {{-- Interest rate --}}
             <div class="col-lg-4 form-group">

@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Models\Invoice;
+use App\Models\Loan;
 use Illuminate\Database\Eloquent\Model;
 
 class Depreciation extends Model
@@ -16,6 +17,6 @@ class Depreciation extends Model
     }
     public function loan()
     {
-        return $this->belongsTo(Invoice::class, 'loan_id');
+        return $this->belongsTo(Loan::class, 'loan_id');
     }
 }

@@ -10,13 +10,20 @@ $('#depreciation_amount').on('change click', function(){
     var down_payment_amount = loan_amount - depreciation_amount;
     $('#down_payment_amount').val(down_payment_amount);
 });
+$("#depreciation_percentage").on("change click", function () {
+    var loan_amount = $("#loan_amount").val();
+    var depreciation_amount = $("#depreciation_amount").val();
+    var depreciation_percentage = ((depreciation_amount/loan_amount) * 100);
+    $("#depreciation_percentage").val(depreciation_percentage);
+});
 $('#calculate-payment').click(function () {
   $('#error-msg').text('');
   calcPaymentSchedules();
 });
 function calcPaymentSchedules() {
   var scheduleType = $("#schedule_type").val();
-  var  down_payment_amount = $('#down_payment_amount').val();
+  var down_payment_amount = $('#down_payment_amount').val();
+  var depreciation_percentage = $("#depreciation_percentage").val();
   var interest_rate = $('#interest_rate').val();
   var installment = $('#installment').val();
   var payment_per_month = $("#payment_per_month").val();

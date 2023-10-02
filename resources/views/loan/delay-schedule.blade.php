@@ -4,7 +4,7 @@
         @csrf
         <input type="hidden" name="schedule_reference_id"  value="{{ $schedule_reference->id }}">
         <div class="modal-header">
-          <h4 class="modal-title">{{ trans('app.delay_schedule') }}</h4>
+          <h4 class="modal-title">{{ trans('app.reschedule') }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
   

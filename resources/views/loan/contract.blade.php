@@ -180,14 +180,16 @@
     @php
         $branch = $loan->branch;
         $client = $loan->client;
+
         $depreciation_amount = ($loan->depreciation_amount/$loan->loan_amount) * 100;
+        
     @endphp
 
     <div class="content-wrapper">
         <div class="row">
             <div class="content-footer">
                 <div class="bottom-footer mt-4 row">
-                    <div class="col-xs-1">
+                    <div class="col-xs-5">
                         <img src="{{ asset($branch->logo) }}" width="100%" alt="" class="mt-4">
                     </div>
                     <div class="col-xs-11 row">
@@ -198,24 +200,24 @@
                                 </h5>
                         </div>
                         <div class="col-xs-12 row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-8">
                                 <p>{{ 'Tel: ' . $loan->branch->phone_1
                                     . (isset($loan->branch->phone_2) ? '/' . $loan->branch->phone_2 : '')
                                     . (isset($loan->branch->phone_3) ? '/' . $loan->branch->phone_3 : '')
                                     . (isset($loan->branch->phone_4) ? '/' . $loan->branch->phone_4 : '')
                                  }}</p>
                             </div>
-                            <div class="col-xs-6 ">
+                            {{-- <div class="col-xs-6 ">
                                 <p class="float-right">
                                     Email: {{ $loan->note }}
                                 </p>
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>
 
                 </div>
-                <hr class="footer-ruler">
+                <hr class="footer-ruler w-full">
             </div>
             <div class="content-body">
                 <div class="row">
@@ -259,8 +261,12 @@
                         <table>
                             <tbody>
                                 <tr>
+                                    <td>Email: {{ $loan->note }}</td>
+                                </tr>
+                                <tr>
                                     <td style="width: 30%">{{ trans('app.client_name') }}</td>
                                     <td>:</td>
+                                       
                                     <td> <span class="moul-font">{{ $client->name }}</span>
                                         {{-- {{ trans('app.id_card_number') }} : {{ $client->id_card_number }} --}}
                                     </td>
@@ -396,34 +402,52 @@
                         {{ trans('app.payment_schedule') }}
                         </h4>
                         <thead>
+                            @php
+        
+                                $finalTotal=0;
+                            @endphp
+                            {{-- @foreach ($data->DepreciationAmount as $DepreciationAmount)
+                            @php
+
+                                $finalTotal+= decimalNumber($DepreciationAmount);
+
+                            @endphp
+                            @endforeach --}}
                             <tr  style="background-color: #b4f4ff">
                                 <th style="width:7%;">{{ trans('app.no_sign') }}</th>
                                 <th style="width:30%;">{{ trans('app.payment_date') }}</th>
                                 <th style="width:10%;">{{ trans('app.amount') }}</th>
                                 <th  style="width:10%;">{{ trans('app.payment_method') }}</th>
+                                <th  style="width:10%;">{{ trans('app.client_code') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $data)
                                 <tr>
                                     <td class="text-center">
-                                        {{ $key+1 }}
+                                       {{ $loop->iteration }}
                                     </td>
                                     <td class="text-center">
                                            {{ $data->invoice->id }}
                                     </td>
                                     <td  class="text-center">
                                         $ {{decimalNumber ( $data->DepreciationAmount) }}
+                                        @php
+                                             $finalTotal+= decimalNumber($data->DepreciationAmount);
+                                        @endphp
                                     </td>
                                     <td  class="text-center">
                                          {{ $data->payment_method }}
+                                    </td>
+                                     <td  class="text-center">
+                                        {{ $data->loan->client_code }}
                                     </td>
                                 </tr>
                                     
                             @endforeach
                             <tr  style="background-color:#acffbf">
                                 <td colspan="2" class=" text-center ">{{ trans('app.balance') }}</td>
-                                <td colspan="2"> $ {{ decimalNumber($loan->loan_amount, true) }}</td>
+                                <td colspan="2" class="text-center"> $ {{ decimalNumber($finalTotal) }}</td>
                                  
                             </tr>
                            
