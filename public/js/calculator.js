@@ -1,15 +1,19 @@
-$('#loan_amount').on('change click', function(){
-    var loan_amount = $(this).val();
-    var depreciation_amount = $('#depreciation_amount').val();
-    var down_payment_amount = loan_amount - depreciation_amount;
-    $('#down_payment_amount').val(down_payment_amount);
-});
-$('#depreciation_amount').on('change click', function(){
-    var loan_amount = $("#loan_amount").val();
-    var depreciation_amount = $('#depreciation_amount').val();
-    var down_payment_amount = loan_amount - depreciation_amount;
-    $('#down_payment_amount').val(down_payment_amount);
-});
+// $('#loan_amount').on('change click', function(){
+//     var loan_amount = $(this).val();
+//     var depreciation_amount = $('#depreciation_amount').val();
+//     var down_payment_amount = loan_amount - depreciation_amount;
+//     $('#down_payment_amount').val(down_payment_amount);
+// });
+
+// $('#depreciation_amount').on('change click', function(){
+//     var loan_amount = $("#loan_amount").val();
+//     var depreciation_amount = $('#depreciation_amount').val();
+//     var down_payment_amount = loan_amount - depreciation_amount;
+//     $('#down_payment_amount').val(down_payment_amount);
+// });
+
+
+
 $('#calculate-payment').click(function () {
   $('#error-msg').text('');
   calcPaymentSchedules();

@@ -324,19 +324,35 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
               </select>
             </div>
 
-            {{-- Loan amount --}}
+            <!-- {{-- Loan amount --}}
             <div class="col-lg-4 form-group">
               <label for="loan_amount" class="control-label">
                 {{ trans('app.loan_amount') }} ($) {!! $requiredFormType !!}
               </label>
               <input type="text" name="loan_amount" id="loan_amount" class="form-control decimal-input" required
                 value="{{ old('loan_amount') ?? $loan->loan_amount }}" readonly>
+            </div> -->
+            {{-- Loan amount --}}
+            <div class="col-lg-4 form-group">
+              <label for="loan_amount" class="control-label">
+                Loan amount ($) {!! $requiredFormType !!}
+              </label>
+              <input type="text" name="loan_amount" id="loan_amount" class="form-control decimal-input" required
+                value="{{ old('loan_amount') ?? $loan->loan_amount }}" readonly>
             </div>
 
-            {{-- Depreciation amount --}}
+            <!-- {{-- Depreciation amount --}}
             <div class="col-lg-4 form-group">
               <label for="depreciation_amount" class="control-label">
                 {{ trans('app.depreciation_amount') }} ($) {!! $requiredFormType !!}
+              </label>
+              <input type="text" name="depreciation_amount" id="depreciation_amount" class="form-control decimal-input"
+                value="{{ old('depreciation_amount') ?? $loan->depreciation_amount }}" required {{ $disabledFormType }}>
+            </div> -->
+            {{-- Depreciation amount --}}
+            <div class="col-lg-4 form-group">
+              <label for="depreciation_amount" class="control-label">
+                Depreciation amount ($) {!! $requiredFormType !!}
               </label>
               <input type="text" name="depreciation_amount" id="depreciation_amount" class="form-control decimal-input"
                 value="{{ old('depreciation_amount') ?? $loan->depreciation_amount }}" required {{ $disabledFormType }}>
@@ -356,10 +372,18 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
                 @endforeach
               </select>
             </div>
-            {{-- Down payment amount --}}
+            <!-- {{-- Down payment amount --}}
             <div class="col-lg-4 form-group">
               <label for="down_payment_amount" class="control-label">
                 {{ trans('app.down_payment_amount') }} ($)
+              </label>
+              <input type="text" name="down_payment_amount" id="down_payment_amount" class="form-control decimal-input"
+                value="{{ old('down_payment_amount') ?? $loan->down_payment_amount }}" readonly {{ $disabledFormType }}>
+            </div> -->
+            {{-- Down payment amount --}}
+            <div class="col-lg-4 form-group">
+              <label for="down_payment_amount" class="control-label">
+                Down payment amount ($)
               </label>
               <input type="text" name="down_payment_amount" id="down_payment_amount" class="form-control decimal-input"
                 value="{{ old('down_payment_amount') ?? $loan->down_payment_amount }}" readonly {{ $disabledFormType }}>

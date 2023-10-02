@@ -8,9 +8,16 @@
 @section('content')
     <main class="app-content">
         <div class="tile">
-            <h3 class="page-heading">{{$title}}</h3>
+            <h3>Repay type: {{$repayType}}</h3>
+            <h3 class="page-heading">{{ $title  }}</h3>
+            <div class=" card-body ">
+                @foreach($data as $data)
+                <h5>{{ trans('app.client_code') }}: {{$data->loan->client_code}} | {{$data->loan->client->name}}</h5>
+                @endforeach
+            </div>
+
             @include('partial/flash-message')
-            <form method="post" id="payment-form" class="no-auto-submit" action="" enctype="multipart/form-data">
+            <form method="post" id="payment-form" class="no-auto-submit" action="{{ route('payments.savedepreciation', $data->loan->id) }}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="repay_type" value="">
                 <div class="card mb-4">
@@ -18,50 +25,41 @@
                         <h5>{{ trans('app.payment_method') }}</h5>
                         <br>
                             <div class="row">
-                                <div class="col-lg-4 form-group">
+                                <div class="col-lg-6 form-group">
                                     <label for="payment_date" class="control-label">
                                         {{ trans('app.paid_date') }} <span class="required">*</span>
                                     </label>
                                     <input type="text" name="payment_date" id="date-picker" class="form-control"
                                         value="{{ old('payment_date') ?? date('d-m-Y') }}" placeholder="{{ trans('app.date_placeholder') }}" required>
                                 </div>
-                                <div class="col-lg-4 form-group">
+                                <div class="col-lg-6 form-group">
                                     <label for="payment_amount" class="control-label">
                                         {{ trans('app.payment_amount') }} ($) <span class="required">*</span>
                                     </label>
                                     <input type="text" name="payment_amount" id="payment_amount" class="form-control decimal-input"
-                                        value="" required {{ Config::get('app.remain_payment')==true ? "readonly":""}}>
+                                        value="payment amount" required {{ Config::get('app.remain_payment')==true ? "readonly":""}}>
                                 </div>
-                                <div class="col-lg-4 form-group">
-                                    <label for="payment_method" class="control-label">
+                                <div class="col-lg-6 form-group">
+                                <label for="payment_method" class="control-label">
                                         {{ trans('app.payment_method') }} <span class="required">*</span>
                                     </label>
                                     <select name="payment_method" id="payment_method" class="form-control select2 select2-no-search" required>
-                                            <option value="">
-                                                Payment Method
+                                        @foreach (paymentMethods() as $methodKey => $methodValue)
+                                            <option value="{{ $methodKey }}" {{ $methodKey == (old('payment_method') ?? 'dp') ? 'selected' : '' }}>
+                                                {{ $methodValue }}
                                             </option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <div class="col-lg-4 form-group">
-                                    <label for="penalty_amount" class="control-label">
-                                        {{ trans('app.penalty_amount') }} ($)
-                                    </label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"></span>
-                                        </div>
-                                        <input type="text" name="penalty_amount" id="penalty_amount" class="form-control decimal-input"
-                                            value="{{ old('penalty_amount') }}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 form-group">
+                                <div class="col-lg-6 form-group text-left">
                                     <label for="reference_number" class="control-label">
                                         {{ trans('app.reference_number') }}
                                     </label>
                                     <input type="text" name="reference_number" id="reference_number" class="form-control"
                                         value="{{ old('reference_number') }}">
                                 </div>
-                                <div class="col-lg-6 form-group">
+
+                                <div class="col-lg-6 form-group clear">
                                     <label for="note" class="control-label">
                                         {{ trans('app.note') }}
                                     </label>
@@ -74,9 +72,9 @@
                                     <input type="file" name="receipt_photo" id="photo" class="form-control" accept=".jpg, .jpeg, .png">
                                 </div>
                                 <div class="col-lg-12 text-right">
-                                <button type="submit" class="btn btn-success" onclick="confirmFormSubmission($('#payment-form'))">
-                                        {{ $repayLabel }}
-                                    </button>
+                                 <button type="submit" class="btn btn-success" onclick="confirmFormSubmission($('#payment-form'))">
+                                        {{$repayLabel}}
+                                </button>
                                 </div>
                             </div>
 

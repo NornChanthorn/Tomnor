@@ -120,9 +120,10 @@
                                     </a>
                                 @endif
                                 @if (isAdmin() &&  $loan->status == LoanStatus::ACTIVE || Auth::user()->can('loan.pay') && $loan->status == LoanStatus::ACTIVE)
-                                    {{-- Pay Deposit --}}
-                                    <a href="{{ route('repayment.payDeposite', [$loan->id, RepayType::PAY_DEPOSIT]) }}" class="btn btn-success mb-1">
-                                        <i class="fa fa-money"></i>  {{ trans('app.pay_deposit') }}
+                                    {{-- Pay Drepreciation --}}
+                                    
+                                    <a href="{{ route('payments.paydepreciation', [$loan->id, RepayType::PAY_DEPRECIATION])}}" class="btn btn-success mb-1">
+                                        <i class="fa fa-money"></i>  {{ trans('app.pay_depreciation') }}
                                     </a>
                                     {{-- Simple repayment --}}
                                     <a href="{{ route('repayment.show', [$loan->id, RepayType::REPAY]) }}" class="btn btn-success mb-1">

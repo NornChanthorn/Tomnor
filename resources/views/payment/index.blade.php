@@ -5,7 +5,7 @@
 @section('content')
   <main class="app-content">
     <div class="tile">
-       
+       <h1>Here is payment index</h1>
       <h3 class="page-heading">{{ trans('app.payment') }}</h3>
       @include('partial/flash-message')
       <div class="card">

@@ -207,11 +207,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/list', 'RepaymentController@listRepayment')->name('list');
     Route::get('{id}/{repayType}', 'RepaymentController@show')->name('show');
     Route::post('{id}/save', 'RepaymentController@save')->name('save');
-    Route::get('/payDeposite', function(){
-        $title = trans('app.pay_deposit');
-        return view('payment.depreciation-form', compact('title'));
-    })->name('payDeposite');
   });
+
 
   // Payment
   Route::prefix('payments')->name('payments.')->group(function() {
@@ -225,6 +222,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('save/{id}', 'PaymentController@save')->name('save');
     Route::delete('delete/{id}', 'PaymentController@destroy')->name('destroy');
+    Route::get('/{id}/{repayType}', 'DepreciationController@show')->name('paydepreciation');
+    Route::get('/{id}/save', 'DepreciationController@save')->name('savedepreciation');
   });
   // Route::resource('payments', 'PaymentController')->only(resourceRouteMethods());
 

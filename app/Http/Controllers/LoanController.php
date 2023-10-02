@@ -14,7 +14,7 @@ use App\Constants\PaymentScheduleType;
 use App\Constants\Message;
 use App\Constants\StockTransaction;
 use App\Constants\StockType;
-use App\Depreciation;
+use App\Models\Depreciation;
 use App\Http\Requests\LoanRequest;
 use App\Models\AgentCommission;
 use App\Models\Branch;
