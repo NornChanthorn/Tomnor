@@ -28,6 +28,7 @@ use App\Models\Schedule;
 use App\Models\ScheduleReference;
 use App\Models\ScheduleHistory;
 use App\Models\Staff;
+
 // use App\Models\ProductWarehouse;
 // use App\Models\StockHistory;
 use App\Models\Variantion;
@@ -716,7 +717,13 @@ class LoanController extends Controller
       $loan->changed_by = auth()->user()->id;
 
       if ($status == LoanStatus::ACTIVE) {
-        $loan->approved_date = date('Y-m-d');
+         $loan->approved_date = date('Y-m-d');
+         Depreciation::create([
+            'load_id' => $loan->id,
+            'c_id' => $loan->client_code,
+            'paid_amount' => 0,
+            'outstanding_amount' => $loan->depreciation_amount
+        ]);
       }
       $loan->save();
 

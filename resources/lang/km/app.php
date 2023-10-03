@@ -3,6 +3,7 @@
 return [
     'app_title' => 'Amazon Phone Shop',
     'account' => 'គណនី',
+    'aba' => 'ABA',
     'account_number' => 'លេខគណនី',
     'account_number_and_wing' => 'លេខ​គណនី វីង',
     'account_summary' => 'គណនីសង្ខេប',

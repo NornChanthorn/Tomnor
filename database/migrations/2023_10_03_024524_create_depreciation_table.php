@@ -16,13 +16,11 @@ class CreateDepreciationTable extends Migration
         Schema::create('depreciations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('loan_id');
-            $table->unsignedInteger('invoice_id');
-            $table->double('DepreciationAmount')->nullable();
-            $table->string('payment_method')->nullable();
+            $table->string('c_id');
+            $table->double('paid_amount')->nullable()->default(0);
+            $table->double('outstanding_amount')->nullable();
 
             $table->foreign('loan_id')->references('id')->on('loans')->onUpdate('cascade')->onDelete('cascade');
-            // Create a foreign key constraint on 'Date' column by referencing 'payment_date' column on 'invoices' table
-            $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->timestamps();
         });
     }

@@ -223,7 +223,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('save/{id}', 'PaymentController@save')->name('save');
     Route::delete('delete/{id}', 'PaymentController@destroy')->name('destroy');
     Route::get('/{id}/{repayType}', 'DepreciationController@show')->name('paydepreciation');
-    Route::get('/{id}/save', 'DepreciationController@save')->name('savedepreciation');
+    Route::post('/{id}/save', 'DepreciationController@save')->name('savedepreciation');
+
   });
   // Route::resource('payments', 'PaymentController')->only(resourceRouteMethods());
 
