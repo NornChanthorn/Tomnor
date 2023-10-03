@@ -143,7 +143,7 @@
                                 @endif
                                 @if ($loan->status=='ac')
                                     <a href="javascript::void(0);" class="btn btn-primary mb-1 btn-modal" title="{{ trans('app.delay_schedule') }}" data-href="{{ route('loan.delaySchedule', $loan) }}" data-container=".schedule_modal">
-                                        {{ __('app.delay_schedule') }}
+                                        {{ __('app.reschedule') }}
                                     </a>
                                 @endif
 

@@ -347,7 +347,13 @@ class LoanController extends Controller
       'setting'
     ));
   }
+  
 
+
+
+
+
+  
   /**
    * Save new or existing loan.
    *
@@ -376,6 +382,7 @@ class LoanController extends Controller
       'loan_amount' => 'required|numeric',
       'depreciation_amount' => 'required|numeric',
     ];
+    
 
     if (isAdmin() || empty(auth()->user()->staff)) {
       $validationRules = array_merge($validationRules, [
@@ -433,6 +440,7 @@ class LoanController extends Controller
     $loan->loan_amount          = $request->loan_amount;
     $loan->product_price        = $request->product_price;
     $loan->depreciation_amount  = $request->depreciation_amount;
+    $loan->depreciation_percentage  = $request->depreciation_percentage;
     $loan->down_payment_amount  = $request->down_payment_amount;
     $loan->payment_method       = $request->payment_method;
     $loan->interest_rate        = $request->interest_rate;
@@ -494,6 +502,7 @@ class LoanController extends Controller
           'variantion_id'               => $product['variantion_id'],
           'qty'                         => $product['quantity'],
           'unit_price'                  => $product['price'],
+          // 'depreciation_percentage'     => $product['depreciation_percentage'],
           // 'product_ime'                 => $product['sell_line_note']
         ];
         $products[] = new LoanProductDetail($line);
@@ -877,7 +886,10 @@ class LoanController extends Controller
       return $item->unit_price * $item->qty;
     })->sum() + $loan->branch->others_charges;
     $loan->balance = $loan->sub_total - $loan->depreciation_amount;
+    // $loan->depreciation_percentage = ($loan->depreciation_amount/$loan->loan_amount) * 100;
 
+
+    
     $sale = Transaction::where('id', $loan->transaction_id)->where('type', 'leasing')->first();
     $sale->final_total = $sale->sell_lines->map(function($item) {
       return $item->unit_price * $item->quantity;
@@ -905,7 +917,7 @@ class LoanController extends Controller
         'alert-type' => 'warning'
       ], 403);
     }
-    $data =Depreciation::with('invoice')->get();
+    $data =Depreciation::with('invoice', 'loan')->get();
     return view('loan/contract', compact('loan', 'data'));
   }
 

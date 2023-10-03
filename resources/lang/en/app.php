@@ -400,6 +400,7 @@ return [
     'insert' => 'Insert',
     'select_date_range' => 'Select a date range',
     'due_amount' => 'Due amount',
+    'reschedule' => 'Re-schedule',
 
     'today' => 'Today',
     'yesterday' => 'Yesterday',

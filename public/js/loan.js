@@ -62,7 +62,7 @@ $(function () {
     
     // If fields are invalid
     if (
-      !($('#schedule_type, #loan_amount, #depreciation_amount, #down_payment_amount, #installment, #loan_start_date').attr('required', true).valid())
+      !($('#schedule_type, #loan_amount, #depreciation_amount, #, #installment, #loan_start_date').attr('required', true).valid())
       || ([equalPaymentSchedule, declineInterestSchedule].includes($('#schedule_type').val()) && !($('#interest_rate').attr({'required': true, 'min': 0}).valid()))
       || ($('#sale-product-table tbody').length == 0)
     ) {
@@ -133,66 +133,92 @@ function calcPaymentSchedules() {
   var scheduleType = $('#schedule_type').val();
 
   $.ajax({
-    url: scheduleRetrievalUrl,
-    data: {
-      // Payment schedule data
-      schedule_type: scheduleType,
-      down_payment_amount: $('#down_payment_amount').val(),
-      interest_rate: $('#interest_rate').val(),
-      installment: $('#installment').val(),
-      payment_per_month: $('#payment_per_month').val(),
-      loan_start_date: $('#loan_start_date').val(),
-      first_payment_date: $('#first_payment_date').val(),
-    },
-    success: function (data) {
-      var isFlatInterestSchedule = (scheduleType == flatInterestSchedule);
-      var grandTotalAmount = totalInterest = 0;
-      var scheduleData = '<thead><tr><th>' + noLabel + '</th><th>' + paymentDateLabel + '</th>';
+      url: scheduleRetrievalUrl,
+      data: {
+          // Payment schedule data
+          schedule_type: scheduleType,
+          down_payment_amount: $("#down_payment_amount").val(),
+          interest_rate: $("#interest_rate").val(),
+          installment: $("#installment").val(),
+          payment_per_month: $("#payment_per_month").val(),
+          loan_start_date: $("#loan_start_date").val(),
+          first_payment_date: $("#first_payment_date").val(),
+      },
+      success: function (data) {
+          var isFlatInterestSchedule = scheduleType == flatInterestSchedule;
+          var grandTotalAmount = (totalInterest = 0);
+          var scheduleData =
+              "<thead><tr><th>" +
+              noLabel +
+              "</th><th>" +
+              paymentDateLabel +
+              "</th>";
 
-      if (isFlatInterestSchedule) {
-        scheduleData += '<th>' + paymentAmountLabel + '</th>';
-      } 
-      else {
-        scheduleData +=
-        '<th>' + totalLabel + '</th>' +
-        '<th>' + principalLabel + '</th>' +
-        '<th>' + interestLabel + '</th>';
-      }
-      scheduleData += '<th>' + outstandingLabel + '</th></tr></thead><tbody>';
-
-      $.each(data, function (key, value) {
-        grandTotalAmount += decimalNumber(value.total,2);
-        totalInterest += decimalNumber(value.interest);
-        scheduleData += '<tr><td>' + ++key + '</td><td>' + value.payment_date + '</td>';
-
-        if (isFlatInterestSchedule) {
-          scheduleData += '<td>$ ' + value.principal + '</td>';
-        } 
-        else {
+          if (isFlatInterestSchedule) {
+              scheduleData += "<th>" + paymentAmountLabel + "</th>";
+          } else {
+              scheduleData +=
+                  "<th>" +
+                  totalLabel +
+                  "</th>" +
+                  "<th>" +
+                  principalLabel +
+                  "</th>" +
+                  "<th>" +
+                  interestLabel +
+                  "</th>";
+          }
           scheduleData +=
-          '<td>$ ' + decimalNumber(value.total,2) + '</td>' +
-          '<td>$ ' + decimalNumber(value.principal,2) + '</td>' +
-          '<td>$ ' + decimalNumber(value.interest,2) + '</td>';
-        }
+              "<th>" + outstandingLabel + "</th></tr></thead><tbody>";
 
-        scheduleData += '<td>$ ' + value.outstanding + '</td></tr>';
-      });
+          $.each(data, function (key, value) {
+              grandTotalAmount += decimalNumber(value.total, 2);
+              totalInterest += decimalNumber(value.interest);
+              scheduleData +=
+                  "<tr><td>" +
+                  ++key +
+                  "</td><td>" +
+                  value.payment_date +
+                  "</td>";
 
-      if (!isFlatInterestSchedule) {
-        scheduleData += '<tr><td></td> <td></td>' +
-        '<td><b>$ ' + $.number(grandTotalAmount) + '</b></td>' +
-        '<td></td>' +
-        '<td><b>$ ' + $.number(totalInterest) + '</b></td>' +
-        '<td></td></tr>';
-      }
+              if (isFlatInterestSchedule) {
+                  scheduleData += "<td>$ " + value.principal + "</td>";
+              } else {
+                  scheduleData +=
+                      "<td>$ " +
+                      decimalNumber(value.total, 2) +
+                      "</td>" +
+                      "<td>$ " +
+                      decimalNumber(value.principal, 2) +
+                      "</td>" +
+                      "<td>$ " +
+                      decimalNumber(value.interest, 2) +
+                      "</td>";
+              }
 
-      scheduleData += '</tbody>';
-      $('#schedule-table').html(scheduleData).show();
-    },
-    error: function (xhr, status, error) {
-      $('#error-msg').text(xhr.responseJSON.message);
-      $('#schedule-table').html('').hide();
-    }
+              scheduleData += "<td>$ " + value.outstanding + "</td></tr>";
+          });
+
+          if (!isFlatInterestSchedule) {
+              scheduleData +=
+                  "<tr><td></td> <td></td>" +
+                  "<td><b>$ " +
+                  $.number(grandTotalAmount) +
+                  "</b></td>" +
+                  "<td></td>" +
+                  "<td><b>$ " +
+                  $.number(totalInterest) +
+                  "</b></td>" +
+                  "<td></td></tr>";
+          }
+
+          scheduleData += "</tbody>";
+          $("#schedule-table").html(scheduleData).show();
+      },
+      error: function (xhr, status, error) {
+          $("#error-msg").text(xhr.responseJSON.message);
+          $("#schedule-table").html("").hide();
+      },
   });
 }
 
@@ -286,4 +312,5 @@ function calculateTotalLoan() {
   $("#product_price").val(price_total);
   $('#loan_amount').val(loanAmount);
   $('#down_payment_amount').val(downPaymentAmount);
+  $("#depreciation_percentage").val(depreciation_percentage);
 }

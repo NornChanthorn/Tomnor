@@ -18,6 +18,7 @@ class Loan extends Model
         'loan_amount',
         'commission_amount',
         'depreciation_amount',
+        'depreciation_percentage',
         'down_payment_amount',
         'extra_fee',
         'interest_rate',
