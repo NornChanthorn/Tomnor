@@ -727,11 +727,11 @@ if (!function_exists('paymentMethods')) {
 
         // if($key){
         //     return ExtendedProperty::where('value',$key)->property_name;
-            
+
         // }else{
-        //     return 
+        //     return
         // }
-        
+
 
 
         // return $paymentMethods[$key] ?? trans('app.n/a');
@@ -770,7 +770,7 @@ if (!function_exists('paymentMethodsNew')) {
      *
      * @return array|string
      */
-    
+
     function paymentMethodsNew($key = null)
     {
         $paymentMethods = [
@@ -779,6 +779,7 @@ if (!function_exists('paymentMethodsNew')) {
             'wing' => trans('app.wing'),
             'true_money' => trans('app.truemoney'),
             'e_money' => trans('app.emoney'),
+            'aba' => trans('app.aba')
         ];
 
         if ($key === null) {
@@ -1209,7 +1210,7 @@ if(!function_exists('currencyRemoveFormat')) {
             'leasing-dp' => trans('app.leasing').' '.trans('app.depreciation_amount'),
             'purchase' => trans('app.purchase'),
             'purchase_return' => trans('app.purchase_return'),
-     
+
         ];
 
         if ($key === null) {

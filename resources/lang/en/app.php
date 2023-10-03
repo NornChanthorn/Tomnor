@@ -4,6 +4,7 @@ return [
     'app_title' => 'Amazon Phone Shop',
 
     'account' => 'Account',
+    'aba' => 'ABA',
     'account_number' => 'Account Number',
     'account_number_and_wing' => 'Account Number and Wing',
     'action' => 'Action',

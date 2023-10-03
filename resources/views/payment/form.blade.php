@@ -8,7 +8,6 @@
 @section('content')
     <main class="app-content">
         <div class="tile">
-            <p>It's from Payment/form blade</p>
             <h3 class="page-heading">{{ $title  }}</h3>
             @include('partial/flash-message')
             <form method="post" id="payment-form" class="no-auto-submit" action="{{ route('repayment.save', $loan->id) }}" enctype="multipart/form-data">

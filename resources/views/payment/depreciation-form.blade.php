@@ -8,18 +8,32 @@
 @section('content')
     <main class="app-content">
         <div class="tile">
-            <h3>Repay type: {{$repayType}}</h3>
-            <h3 class="page-heading">{{ $title  }}</h3>
-            <div class=" card-body ">
-                @foreach($data as $data)
-                <h5>{{ trans('app.client_code') }}: {{$data->loan->client_code}} | {{$data->loan->client->name}}</h5>
-                @endforeach
-            </div>
+            <h3 class="page-heading">{{ $title }}</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                        <h5>{{ trans('app.client_information') }}</h5>
 
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <p>{{ trans('app.client_name') }} : @include('partial.client-detail-link', ['client' => $loan->client])</p>
+                                <p>{{ trans('app.client_code') }} : {{ $loan->client_code }}</p>
+                                <p>{{ trans('app.loan_code') }} : {{ $loan->account_number }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{ trans('app.first_phone') }} : {{ $loan->client->first_phone }}</p>
+                                <p>{{ trans('app.second_phone') }} : {{ $loan->second_phone }}</p>
+                                <p>{{ trans('app.id_card_number') }} : {{ $loan->client->id_card_number }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="{{ asset($loan->client->profile_photo) }}" width="50%" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @include('partial/flash-message')
-            <form method="post" id="payment-form" class="no-auto-submit" action="{{ route('payments.savedepreciation', $data->loan->id) }}" enctype="multipart/form-data">
+            <form method="post" id="payment-form" class="no-auto-submit" action="{{ route('payments.savedepreciation', $loan->id) }}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="repay_type" value="">
+                <input type="hidden" name="repay_type" value="{{ $repayType }}">
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5>{{ trans('app.payment_method') }}</h5>
@@ -37,7 +51,7 @@
                                         {{ trans('app.payment_amount') }} ($) <span class="required">*</span>
                                     </label>
                                     <input type="text" name="payment_amount" id="payment_amount" class="form-control decimal-input"
-                                        value="payment amount" required {{ Config::get('app.remain_payment')==true ? "readonly":""}}>
+                                        value="payment_amount" required {{ Config::get('app.remain_payment')==true ? "readonly":""}}>
                                 </div>
                                 <div class="col-lg-6 form-group">
                                 <label for="payment_method" class="control-label">

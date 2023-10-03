@@ -8,4 +8,6 @@ class PaymentMethod
     const WING = 'w';
     const TRUE_MONEY = 'tm';
     const E_MONEY = 'em';
+    const ABA = 'aba';
+
 }

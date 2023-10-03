@@ -51,6 +51,9 @@ class Loan extends Model
     {
         return $this->hasMany(Invoice::class, 'loan_id');
     }
+    public function depreciation(){
+        return $this->hasOne(Depreciation::class, 'loan_id');
+    }
 
     public function productDetails()
     {
