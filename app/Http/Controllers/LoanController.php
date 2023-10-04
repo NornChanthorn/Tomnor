@@ -339,21 +339,23 @@ class LoanController extends Controller
     $title = trans('app.detail');
     $formType = FormType::SHOW_TYPE;
     $loan->count = 1;
+    $depreciation = Depreciation::where('loan_id', $loan->id)->first();
 
     return view('loan.show', compact(
       'formType',
       'loan',
       'title',
+      'depreciation',
       'setting'
     ));
   }
-  
 
 
 
 
 
-  
+
+
   /**
    * Save new or existing loan.
    *
@@ -382,7 +384,7 @@ class LoanController extends Controller
       'loan_amount' => 'required|numeric',
       'depreciation_amount' => 'required|numeric',
     ];
-    
+
 
     if (isAdmin() || empty(auth()->user()->staff)) {
       $validationRules = array_merge($validationRules, [
@@ -440,7 +442,7 @@ class LoanController extends Controller
     $loan->loan_amount          = $request->loan_amount;
     $loan->product_price        = $request->product_price;
     $loan->depreciation_amount  = $request->depreciation_amount;
-    $loan->depreciation_percentage  = $request->depreciation_percentage;
+    // $loan->depreciation_percentage  = $request->depreciation_percentage;
     $loan->down_payment_amount  = $request->down_payment_amount;
     $loan->payment_method       = $request->payment_method;
     $loan->interest_rate        = $request->interest_rate;
@@ -716,7 +718,6 @@ class LoanController extends Controller
           }
         }
 
-
         // update loan after disburse
         $loan->disbursed_date = Carbon::now()->toDateString();
         $loan->transaction_id = $transaction->id;
@@ -728,11 +729,11 @@ class LoanController extends Controller
       if ($status == LoanStatus::ACTIVE) {
          $loan->approved_date = date('Y-m-d');
          Depreciation::create([
-            'load_id' => $loan->id,
+            'loan_id' => $loan->id,
             'c_id' => $loan->client_code,
             'paid_amount' => 0,
             'outstanding_amount' => $loan->depreciation_amount
-        ]);
+       ]);
       }
       $loan->save();
 
@@ -747,7 +748,7 @@ class LoanController extends Controller
         $invoice->client_id         = $loan->client->id;
         $invoice->payment_amount    = $loan->depreciation_amount;
         $invoice->total             = $loan->depreciation_amount;
-        $invoice->payment_method    = $loan->payment_method;
+        // $invoice->payment_method    = $loan->payment_method;
         $invoice->payment_date      = date('Y-m-d');
         $invoice->note              = $loan->note;
 
@@ -889,7 +890,7 @@ class LoanController extends Controller
     // $loan->depreciation_percentage = ($loan->depreciation_amount/$loan->loan_amount) * 100;
 
 
-    
+
     $sale = Transaction::where('id', $loan->transaction_id)->where('type', 'leasing')->first();
     $sale->final_total = $sale->sell_lines->map(function($item) {
       return $item->unit_price * $item->quantity;

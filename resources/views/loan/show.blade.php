@@ -6,6 +6,7 @@
 <main class="app-content">
   <div class="tile">
     <h3 class="page-heading">{{ trans('app.loan_detail') }}</h3>
+
     @include('partial/flash-message')
     @php
         $isFormShowType = ($formType == FormType::SHOW_TYPE);
@@ -120,11 +121,12 @@
                                     </a>
                                 @endif
                                 @if (isAdmin() &&  $loan->status == LoanStatus::ACTIVE || Auth::user()->can('loan.pay') && $loan->status == LoanStatus::ACTIVE)
-                                    {{-- Pay Drepreciation --}}
-                                    
+                                    <!-- if($loan->depreciation =) -->
+                                   {{-- Pay Drepreciation --}}
                                     <a href="{{ route('payments.paydepreciation', [$loan->id, RepayType::PAY_DEPRECIATION])}}" class="btn btn-success mb-1">
                                         <i class="fa fa-money"></i>  {{ trans('app.pay_depreciation') }}
                                     </a>
+
                                     {{-- Simple repayment --}}
                                     <a href="{{ route('repayment.show', [$loan->id, RepayType::REPAY]) }}" class="btn btn-success mb-1">
                                         <i class="fa fa-money"></i>  {{ trans('app.repay') }}
