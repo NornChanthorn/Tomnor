@@ -182,7 +182,7 @@
         $client = $loan->client;
 
         $depreciation_amount = ($loan->depreciation_amount/$loan->loan_amount) * 100;
-        
+
     @endphp
 
     <div class="content-wrapper">
@@ -266,7 +266,7 @@
                                 <tr>
                                     <td style="width: 30%">{{ trans('app.client_name') }}</td>
                                     <td>:</td>
-                                       
+
                                     <td> <span class="moul-font">{{ $client->name }}</span>
                                         {{-- {{ trans('app.id_card_number') }} : {{ $client->id_card_number }} --}}
                                     </td>
@@ -378,17 +378,17 @@
                             <tr>
                                 <td rowspan="3" colspan="2" class="p-5">
                                     {{ trans('app.duration') }} : {{ $loan->installment . ' ' . trans('app.month') }} <br>
-                                    Depreciation amount  {{ __("ភាគរយបង់មុន") }} : {{ decimalNumber($depreciation_amount, true). ' %' }}
+                                    {{ __("ភាគរយបង់មុន") }} : {{ decimalNumber($depreciation_amount, true). ' %' }}
                                 </td>
-                                <td colspan="2">Loan Amount {{ trans('app.product_price') }}</td>
+                                <td colspan="2">{{ trans('app.product_price') }}</td>
                                 <td> $ {{ decimalNumber($loan->loan_amount, true) }}</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Depreciation amount {{ trans('app.depreciation_amount') }}</td>
+                                <td colspan="2">{{ trans('app.depreciation_amount') }}</td>
                                 <td> $ {{ decimalNumber($loan->depreciation_amount, true) }}</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Down payment amount {{ trans('app.loan_amount') }}</td>
+                                <td colspan="2">{{ trans('app.loan_amount') }}</td>
                                 <td> $ {{ decimalNumber($loan->down_payment_amount, true) }}</td>
                             </tr>
 
@@ -403,7 +403,7 @@
                         </h4>
                         <thead>
                             @php
-        
+
                                 $finalTotal=0;
                             @endphp
                             {{-- @foreach ($data->DepreciationAmount as $DepreciationAmount)
@@ -443,16 +443,16 @@
                                         {{ $data->loan->client_code }}
                                     </td>
                                 </tr>
-                                    
+
                             @endforeach
                             <tr  style="background-color:#acffbf">
                                 <td colspan="2" class=" text-center ">{{ trans('app.balance') }}</td>
                                 <td colspan="2" class="text-center"> $ {{ decimalNumber($finalTotal) }}</td>
-                                 
+
                             </tr>
-                           
+
                         </tbody>
-                      
+
                     </table>
                 </div>
                 <div class="table-responsive">
