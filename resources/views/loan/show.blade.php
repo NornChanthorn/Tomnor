@@ -121,21 +121,23 @@
                                     </a>
                                 @endif
                                 @if (isAdmin() &&  $loan->status == LoanStatus::ACTIVE || Auth::user()->can('loan.pay') && $loan->status == LoanStatus::ACTIVE)
-                                    <!-- if($loan->depreciation =) -->
-                                   {{-- Pay Drepreciation --}}
-                                    <a href="{{ route('payments.paydepreciation', [$loan->id, RepayType::PAY_DEPRECIATION])}}" class="btn btn-success mb-1">
-                                        <i class="fa fa-money"></i>  {{ trans('app.pay_depreciation') }}
-                                    </a>
 
-                                    {{-- Simple repayment --}}
-                                    <a href="{{ route('repayment.show', [$loan->id, RepayType::REPAY]) }}" class="btn btn-success mb-1">
-                                        <i class="fa fa-money"></i>  {{ trans('app.repay') }}
-                                    </a>
+                                        @if($depreciation && $depreciation->outstanding_amount >0)
+                                        {{-- Pay Drepreciation --}}
+                                            <a href="{{ route('payments.paydepreciation', [$loan->id, RepayType::PAY_DEPRECIATION])}}" class="btn btn-success mb-1">
+                                                <i class="fa fa-money"></i>  {{ trans('app.pay_depreciation') }}
+                                            </a>
+                                        @else
+                                            {{-- Simple repayment --}}
+                                            <a href="{{ route('repayment.show', [$loan->id, RepayType::REPAY]) }}" class="btn btn-success mb-1">
+                                                <i class="fa fa-money"></i>  {{ trans('app.repay') }}
+                                            </a>
 
-                                    {{-- Payoff --}}
-                                    <a href="{{ route('repayment.show', [$loan->id, RepayType::PAYOFF]) }}" class="btn btn-success mb-1">
-                                        <i class="fa fa-money"></i> {{ trans('app.pay_off') }}
-                                    </a>
+                                            {{-- Payoff --}}
+                                            <a href="{{ route('repayment.show', [$loan->id, RepayType::PAYOFF]) }}" class="btn btn-success mb-1">
+                                                <i class="fa fa-money"></i> {{ trans('app.pay_off') }}
+                                            </a>
+                                        @endif
                                 @endif
                                 {{-- Print contract --}}
                                 @if (Auth::user()->can('loan.print') && in_array($loan->status, [LoanStatus::ACTIVE, LoanStatus::PAID]))

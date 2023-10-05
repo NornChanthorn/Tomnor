@@ -339,11 +339,13 @@ class LoanController extends Controller
     $title = trans('app.detail');
     $formType = FormType::SHOW_TYPE;
     $loan->count = 1;
-    $depreciation = Depreciation::where('loan_id', $loan->id)->first();
+    $loanId = $loan->id;
 
+    $depreciation = Depreciation::where('loan_id', $loanId)->first();
     return view('loan.show', compact(
       'formType',
       'loan',
+      'loanId',
       'title',
       'depreciation',
       'setting'
