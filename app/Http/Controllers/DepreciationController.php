@@ -275,8 +275,17 @@ class DepreciationController extends Controller
           $invoice->invoice_number = 'REF-' . str_pad(substr($lastInvoiceNum, 4) + 1, 6, 0, STR_PAD_LEFT);
           $invoice->save();
 
-        //   $existingDepreciation = Depreciation::where('loan_id', $loanId)->first();
+          $newPaid = $invoice->payment_amount ;
+          $depreAmount = $loan->depreciation_amount;
+          $existingDepreciation = Depreciation::where('loan_id', $loan->id)->first();
 
+          if($existingDepreciation){
+            $oldPaidAmount = $existingDepreciation->paid_amount;
+            $updatePaidAmount = $oldPaidAmount + $newPaid;
+            $existingDepreciation->paid_amount = $updatePaidAmount;
+            $existingDepreciation->outstanding_amount= $depreAmount - $newPaid ;
+            $existingDepreciation->save();
+          }
             // Depreciation::create([
             //     'loan_id' => $loan->id, // Use the appropriate reference to the invoice
             //     'invoice_id' => $invoice->id, // Assuming you have a 'schedule_id' column

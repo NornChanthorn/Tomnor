@@ -21,7 +21,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
 <main class="app-content">
   <div class="tile">
-    <!-- {{PaymentScheduleType::EQUAL_PAYMENT}} -->
     <h3 class="page-heading">{{ trans('app.loan') . ' - ' . $title }}</h3>
     @include('partial/flash-message')
     <form id="loan-form" method="post" class="no-auto-submit" action="{{ route('loan.save', $loan) }}">
@@ -332,7 +331,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
                 value="{{ old('loan_amount') ?? $loan->loan_amount }}" readonly>
             </div>
 
-
             {{-- Depreciation amount --}}
             <div class="col-lg-4 form-group">
               <label for="depreciation_amount" class="control-label">
@@ -344,7 +342,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
           </div>
           <div class="row">
-            {{-- Payment Method --}}
+            <!-- {{-- Payment Method --}}
             <div class="col-lg-4 form-group">
               <label for="payment_method" class="control-label">
                 {{ trans('app.payment_method') }} <span class="required">*</span>
@@ -356,7 +354,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
                   </option>
                 @endforeach
               </select>
-            </div>
+            </div> -->
             {{-- Down payment amount --}}
             <div class="col-lg-4 form-group">
               <label for="down_payment_amount" class="control-label">
