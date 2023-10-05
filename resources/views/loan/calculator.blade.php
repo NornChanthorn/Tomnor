@@ -21,6 +21,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
 <main class="app-content">
   <div class="tile">
+   <h1>Calculation loan</h1>
     <h3 class="page-heading">{{ trans('app.calculate_loan') }}</h3>
     @include('partial/flash-message')
     <form id="calculator-form" action="{{ route('loan.get_payment_schedule') }}">
