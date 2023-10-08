@@ -89,7 +89,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
                   value="{{ old('depreciation_amount') ?? 0 }}" readonly disabled>
               </div> --}}
 
-
               {{-- Interest rate --}}
               <div class="col-lg-4 form-group">
                 <label for="interest_rate" class="control-label">
@@ -159,6 +158,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
             {{-- Payment schedule table --}}
             <div class="row">
+                <h1>Schedule</h1>
               <div class="col-lg-12 table-responsive" id="print-table">
                 <table style="display: none;" id="schedule-table" class="table table-bordered table-hover table-striped">
                 </table>
@@ -183,7 +183,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
     var codeLabel = '{{ trans('app.code') }}';
     var noneLabel = '{{ trans('app.none') }}';
     var formShowType = '{{ FormType::SHOW_TYPE }}';
-    var equalPaymentSchedule = '{{ PaymentScheduleType::EQUAL_PAYMENT }}';
+    var equalPaymentSchedule = '{{ PaymentScheduleType::AMORTIZATION }}';
     var flatInterestSchedule = '{{ PaymentScheduleType::FLAT_INTEREST }}';
     var declineInterestSchedule = '{{ PaymentScheduleType::DECLINE_INTEREST }}';
     var scheduleRetrievalUrl = '{{ route('loan.get_payment_schedule') }}';

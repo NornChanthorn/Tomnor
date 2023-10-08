@@ -103,7 +103,7 @@
                                         <th>$ {{ decimalNumber($loan->loan_amount, true)  }}</th>
                                     </tr>
                                     <tr>
-                                        <th>{{ trans($loan->schedule_type == PaymentScheduleType::EQUAL_PAYMENT ? 'app.loan_rate' : 'app.interest_rate') }}</th>
+                                        <th>{{ trans($loan->schedule_type == PaymentScheduleType::AMORTIZATION ? 'app.loan_rate' : 'app.interest_rate') }}</th>
                                         <th>{{ $loan->interest_rate }} %</th>
                                     </tr>
                                     <tr>

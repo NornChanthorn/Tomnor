@@ -530,11 +530,20 @@ class LoanController extends Controller
    *
    * @return Response
    */
-  public function getPaymentSchedule(Request $request)
+//   public function getPaymentSchedule(Request $request)
+//   {
+//     // if (!$request->ajax()) {
+//     //   return back();
+//     // }
+
+//     $paymentSchedules = $this->calcPaymentSchedule($request, true);
+//     return response()->json($paymentSchedules);
+//   }
+  public function getPaymentSchedule(LoanRequest $request)
   {
-    // if (!$request->ajax()) {
-    //   return back();
-    // }
+    if (!$request->ajax()) {
+      return back();
+    }
 
     $paymentSchedules = $this->calcPaymentSchedule($request, true);
     return response()->json($paymentSchedules);
@@ -548,86 +557,171 @@ class LoanController extends Controller
    *
    * @return array
    */
-  private function calcPaymentSchedule(Request $request, $displayMode = false)
-  {
-    $loanStartDate = dateIsoFormat($request->loan_start_date);
-    // If first payment date is empty, increase it one month from loan start date
-    $firstPaymentDate = dateIsoFormat($request->first_payment_date) ?? oneMonthIncrement($loanStartDate);
-    $paymentDay = dateIsoFormat(($request->first_payment_date ?? $loanStartDate), 'd');
-    $paymentDate = $firstPaymentDate;
+//   private function calcPaymentSchedule(Request $request, $displayMode = false)
+//   {
+//     $loanStartDate = dateIsoFormat($request->loan_start_date);
+//     // If first payment date is empty, increase it one month from loan start date
+//     $firstPaymentDate = dateIsoFormat($request->first_payment_date) ?? oneMonthIncrement($loanStartDate);
+//     $paymentDay = dateIsoFormat(($request->first_payment_date ?? $loanStartDate), 'd');
+//     $paymentDate = $firstPaymentDate;
 
-    $scheduleType = $request->schedule_type;
-    $isEqualSchedule = ($scheduleType == PaymentScheduleType::EQUAL_PAYMENT);
-    $isDeclineSchedule = ($scheduleType == PaymentScheduleType::DECLINE_INTEREST);
-    $installment = $request->installment;
-    $downPaymentAmount = $outstandingAmount = $request->down_payment_amount;
-    $principal = ($downPaymentAmount / $installment);
-    $firstPayDuration = date_diff(date_create($loanStartDate), date_create($firstPaymentDate))->format('%a');
+//     $scheduleType = $request->schedule_type;
+//     $isEqualSchedule = ($scheduleType == PaymentScheduleType::EQUAL_PAYMENT);
+//     $isDeclineSchedule = ($scheduleType == PaymentScheduleType::DECLINE_INTEREST);
+//     $installment = $request->installment;
+//     $downPaymentAmount = $outstandingAmount = $request->down_payment_amount;
+//     $principal = ($downPaymentAmount / $installment);
+//     $firstPayDuration = date_diff(date_create($loanStartDate), date_create($firstPaymentDate))->format('%a');
 
-    if ($isEqualSchedule) {
-      if ($request->interest_rate > 0) {
-        $loanRate = (($downPaymentAmount * $request->interest_rate) / 100)/30;
-        $totalAmount = pmt($loanRate, $installment, $downPaymentAmount);
-      }
-      else {
-        $interest = 0;
-        $principal = $totalAmount = decimalNumber($principal);
-      }
-    }
-    elseif ($isDeclineSchedule) {
-      $interestRate = $request->interest_rate / 100;
-      $interest = $downPaymentAmount * $interestRate;
-      // Calculate first interest amount of payment schedule
-      $firstPayDuration = date_diff(date_create($loanStartDate), date_create($firstPaymentDate))->format('%a');
-      $firstInterest = ($interest / 30) * $firstPayDuration;
-    }
+//     if ($isEqualSchedule) {
+//       if ($request->interest_rate > 0) {
+//         $loanRate = (($downPaymentAmount * $request->interest_rate) / 100)/30;
+//         $totalAmount = pmt($loanRate, $installment, $downPaymentAmount);
+//       }
+//       else {
+//         $interest = 0;
+//         $principal = $totalAmount = decimalNumber($principal);
+//       }
+//     }
+//     elseif ($isDeclineSchedule) {
+//       $interestRate = $request->interest_rate / 100;
+//       $interest = $downPaymentAmount * $interestRate;
+//       // Calculate first interest amount of payment schedule
+//       $firstPayDuration = date_diff(date_create($loanStartDate), date_create($firstPaymentDate))->format('%a');
+//       $firstInterest = ($interest / 30) * $firstPayDuration;
+//     }
 
-    $loopCount = ($scheduleType == PaymentScheduleType::FLAT_INTEREST ? ($installment + 1) : $installment); // For flat interest, plus one installment
-    $scheduleData = [];
+//     $loopCount = ($scheduleType == PaymentScheduleType::FLAT_INTEREST ? ($installment + 1) : $installment); // For flat interest, plus one installment
+//     $scheduleData = [];
 
-    for ($i = 1; $i <= $loopCount; $i++) {
-      $isFirstLoop = ($i == 1);
-      $isForeLastLoop = ($i == ($loopCount - 1));
-      $paymentDate = ($isFirstLoop ? $paymentDate : oneMonthIncrement($paymentDate, $paymentDay));
+//     for ($i = 1; $i <= $loopCount; $i++) {
+//       $isFirstLoop = ($i == 1);
+//       $isForeLastLoop = ($i == ($loopCount - 1));
+//       $paymentDate = ($isFirstLoop ? $paymentDate : oneMonthIncrement($paymentDate, $paymentDay));
+
+//       if ($isEqualSchedule) {
+//         if ($request->interest_rate > 0) {
+//           if($i==1){
+//             $interest = $loanRate *  $firstPayDuration;
+//             $principal = $principal;
+//           }else{
+//             $interest = $loanRate *  30;
+//             $principal = $principal;
+//           }
+
+//         }else{
+//             $interest = 0;
+//             $principal;
+//         }
+//         $outstandingAmount = ($i == $loopCount ? 0 : ($outstandingAmount - $principal));
+//       }
+//       elseif ($isDeclineSchedule) {
+//         $interest = ($isFirstLoop ? $firstInterest : ($outstandingAmount * $interestRate));
+//         $totalAmount = ($principal + ($isFirstLoop ? $firstInterest : $interest));
+//         $outstandingAmount = ($isForeLastLoop ? $principal : ($outstandingAmount - $principal));
+//       }
+//       else {
+//         $interest = 0;
+//         $totalAmount = $principal *  $firstPayDuration;;
+//         $outstandingAmount = ($isForeLastLoop ? 0 : ($outstandingAmount - $principal));
+//       }
+
+//       $scheduleData[] = [
+//         'payment_date' => ($displayMode ? displayDate($paymentDate) : $paymentDate),
+//         'principal' => ($isEqualSchedule ? number_format($principal, 2) : decimalNumber($principal, $displayMode)),
+//         'interest' => ($isEqualSchedule ? number_format($interest, 2) : decimalNumber($interest, $displayMode)),
+//         'total' => ($isEqualSchedule ? number_format($principal, 2) : decimalNumber($principal, $displayMode)) + ($isEqualSchedule ? number_format($interest, 2) : decimalNumber($interest, $displayMode)),
+//         'outstanding' => decimalNumber($outstandingAmount, $displayMode),
+//       ];
+//     }
+
+//     return $scheduleData;
+//   }
+    private function calcPaymentSchedule(LoanRequest $request, $displayMode = false)
+    {
+      $loanStartDate = dateIsoFormat($request->loan_start_date);
+      // If first payment date is empty, increase it one month from loan start date
+      $firstPaymentDate = dateIsoFormat($request->first_payment_date) ?? oneMonthIncrement($loanStartDate);
+      $paymentDay = dateIsoFormat(($request->first_payment_date ?? $loanStartDate), 'd');
+      $paymentDate = $firstPaymentDate;
+
+      $scheduleType = $request->schedule_type;
+      $isEqualSchedule = ($scheduleType == PaymentScheduleType::AMORTIZATION);
+      $isDeclineSchedule = ($scheduleType == PaymentScheduleType::DECLINE_INTEREST);
+      $installment = $request->installment;
+      $downPaymentAmount = $outstandingAmount = $request->down_payment_amount;
+      $principal = ($downPaymentAmount / $installment);
 
       if ($isEqualSchedule) {
-        if ($request->interest_rate > 0) {
-          if($i==1){
-            $interest = $loanRate *  $firstPayDuration;
-            $principal = $principal;
-          }else{
-            $interest = $loanRate *  30;
-            $principal = $principal;
-          }
+          $loanRate = ($request->interest_rate / 12) / 100;
+          $amortizationSchedule = [];
+          $remainingBalance = $downPaymentAmount;
 
-        }else{
-            $interest = 0;
-            $principal;
-        }
-        $outstandingAmount = ($i == $loopCount ? 0 : ($outstandingAmount - $principal));
+          for ($i = 1; $i <= $installment; $i++) {
+              $interest = $remainingBalance * $loanRate;
+              $totalAmount = pmt($loanRate, $installment, $downPaymentAmount);
+              $principal = $totalAmount - $interest;
+              $amortizationSchedule[] = [
+                  'payment_date' => ($displayMode ? displayDate($paymentDate) : $paymentDate),
+                  'principal' => decimalNumber($principal, $displayMode),
+                  'interest' => decimalNumber($interest, $displayMode),
+                  'total' => decimalNumber($totalAmount, $displayMode),
+                  'outstanding' => decimalNumber($remainingBalance - $principal, $displayMode),
+              ];
+
+              $remainingBalance -= $principal;
+              $paymentDate = oneMonthIncrement($paymentDate, $paymentDay);
+          }
+          return $amortizationSchedule;
+
       }
       elseif ($isDeclineSchedule) {
-        $interest = ($isFirstLoop ? $firstInterest : ($outstandingAmount * $interestRate));
-        $totalAmount = ($principal + ($isFirstLoop ? $firstInterest : $interest));
-        $outstandingAmount = ($isForeLastLoop ? $principal : ($outstandingAmount - $principal));
-      }
-      else {
-        $interest = 0;
-        $totalAmount = $principal *  $firstPayDuration;;
-        $outstandingAmount = ($isForeLastLoop ? 0 : ($outstandingAmount - $principal));
+        $interestRate = $request->interest_rate / 100;
+        $interest = $downPaymentAmount * $interestRate;
+
+        // Calculate first interest amount of payment schedule
+        $firstPayDuration = date_diff(date_create($loanStartDate), date_create($firstPaymentDate))->format('%a');
+        $firstInterest = ($interest / 30) * $firstPayDuration;
       }
 
-      $scheduleData[] = [
-        'payment_date' => ($displayMode ? displayDate($paymentDate) : $paymentDate),
-        'principal' => ($isEqualSchedule ? number_format($principal, 2) : decimalNumber($principal, $displayMode)),
-        'interest' => ($isEqualSchedule ? number_format($interest, 2) : decimalNumber($interest, $displayMode)),
-        'total' => ($isEqualSchedule ? number_format($principal, 2) : decimalNumber($principal, $displayMode)) + ($isEqualSchedule ? number_format($interest, 2) : decimalNumber($interest, $displayMode)),
-        'outstanding' => decimalNumber($outstandingAmount, $displayMode),
-      ];
-    }
+      $loopCount = ($scheduleType == PaymentScheduleType::FLAT_INTEREST ? ($installment + 1) : $installment); // For flat interest, plus one installment
+      $scheduleData = [];
 
-    return $scheduleData;
+      for ($i = 1; $i <= $loopCount; $i++) {
+        $isFirstLoop = ($i == 1);
+        $isForeLastLoop = ($i == ($loopCount - 1));
+        $paymentDate = ($isFirstLoop ? $paymentDate : oneMonthIncrement($paymentDate, $paymentDay));
+
+        if ($isEqualSchedule) {
+          if ($request->interest_rate > 0) {
+            $interest = round($loanRate * $outstandingAmount);
+            $principal = ($totalAmount - $interest);
+          }
+          $outstandingAmount = ($i == $loopCount ? 0 : ($outstandingAmount - $principal));
+        }
+        elseif ($isDeclineSchedule) {
+          $interest = ($isFirstLoop ? $firstInterest : ($outstandingAmount * $interestRate));
+          $totalAmount = ($principal + ($isFirstLoop ? $firstInterest : $interest));
+          $outstandingAmount = ($isForeLastLoop ? $principal : ($outstandingAmount - $principal));
+        }
+        else {
+          $interest = 0;
+          $totalAmount = $principal;
+          $outstandingAmount = ($isForeLastLoop ? 0 : ($outstandingAmount - $principal));
+        }
+
+        $scheduleData[] = [
+          'payment_date' => ($displayMode ? displayDate($paymentDate) : $paymentDate),
+          'principal' => ($isEqualSchedule ? $principal : decimalNumber($principal, $displayMode)),
+          'interest' => ($isEqualSchedule ? $interest : decimalNumber($interest, $displayMode)),
+          'total' => ($isEqualSchedule ? $totalAmount : decimalNumber($totalAmount, $displayMode)),
+          'outstanding' => decimalNumber($outstandingAmount, $displayMode),
+        ];
+      }
+
+      return $scheduleData;
   }
+
 
   /**
    * Change loan status from AJAX request.

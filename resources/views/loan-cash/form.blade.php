@@ -14,12 +14,12 @@
             @include('partial/flash-message')
             <form id="loan-form" method="post" class="no-auto-submit" action="{{ route('loan-cash.save', $loan) }}">
               @csrf
-        
+
               <input type="hidden" name="form_type" value="{{ $formType }}">
               @isset($loan->id)
                 <input type="hidden" name="id" value="{{ $loan->id }}">
               @endisset
-        
+
               {{-- Loan info --}}
               <div class="row">
                 <fieldset class="col-lg-12">
@@ -41,7 +41,7 @@
                                 </select>
                             </div>
                         @endif
-            
+
                         {{-- Account number --}}
                         <div class="col-lg-8 form-group">
                             <label for="account_number_append" class="control-label">
@@ -57,7 +57,7 @@
                                 placeholder="{{ trans('app.reference_code') . ' *' }}" >
                             </div>
                         </div>
-            
+
                         @if (isAdmin() || empty(auth()->user()->staff))
                             {{-- Agent --}}
                             <div class="col-lg-4 form-group">
@@ -76,7 +76,7 @@
                         @else
                             <input type="hidden" name="branch_id" value="{{ auth()->user()->staff->branch_id }}">
                         @endif
-            
+
                         {{-- Client --}}
                         <div class="col-lg-4 form-group">
                             <label for="client" class="control-label">
@@ -93,7 +93,7 @@
                 </fieldset>
               </div>
               <br>
-        
+
               {{-- Payment info --}}
               <div class="row">
                 <fieldset class="col-lg-12">
@@ -108,12 +108,12 @@
                                         {{ trans('app.payment_schedule_type') }} <span class="required">*</span>
                                     </label>
                                     <select name="schedule_type" id="schedule_type" class="form-control select2 select2-no-search" required>
-                                        <option value="{{ PaymentScheduleType::EQUAL_PAYMENT }}">
+                                        <option value="{{ PaymentScheduleType::AMORTIZATION }}">
                                             {{ trans('app.equal_payment') }}
                                         </option>
                                     </select>
                                 </div>
-                    
+
                                 {{-- Loan amount --}}
                                 <div class="col-lg-6 form-group">
                                     <label for="loan_amount" class="control-label">
@@ -122,7 +122,7 @@
                                     <input type="text" name="loan_amount" id="loan_amount" class="form-control decimal-input" required
                                         value="{{ old('loan_amount',$loan->loan_amount) ?? 0  }}" required>
                                 </div>
-                            
+
                                 {{-- Interest rate --}}
                                 <div class="col-lg-6 form-group">
                                     <label for="interest_rate" class="control-label">
@@ -132,7 +132,7 @@
                                     <input type="text" name="interest_rate" id="interest_rate" class="form-control decimal-input"
                                         value="{{ old('interest_rate',$loan->interest_rate) ?? 0  }}" required min="0">
                                 </div>
-                    
+
                                 {{-- Installment --}}
                                 <div class="col-lg-6 form-group">
                                     <label for="installment" class="control-label">
@@ -158,24 +158,24 @@
                                         @endforeach
                                     </select>
                                 </div>
-                    
+
                                 {{-- Loan start date --}}
                                 <div class="col-lg-6 form-group">
                                     <label for="loan_start_date" class="control-label">
                                         {{ trans('app.loan_start_date') }} <span class="required">*</span>
                                     </label>
                                     <input type="text" name="loan_start_date" id="loan_start_date" class="form-control date-picker"
-                                        placeholder="{{ trans('app.date_placeholder') }}" required 
+                                        placeholder="{{ trans('app.date_placeholder') }}" required
                                         value="{{ old('loan_start_date') ?? displayDate($loan->loan_start_date ??  date('d-m-Y')) }}">
                                 </div>
-                    
+
                                 {{-- First payment date --}}
                                 <div class="col-lg-6 form-group">
                                     <label for="first_payment_date" class="control-label">
                                         {{ trans('app.first_payment_date') }}
                                     </label>
                                     <input type="text" name="first_payment_date" id="first_payment_date" class="form-control"
-                                        placeholder="{{ trans('app.date_placeholder') }}" 
+                                        placeholder="{{ trans('app.date_placeholder') }}"
                                         value="{{ old('first_payment_date') ?? displayDate($loan->first_payment_date ?? oneMonthIncrement(date('Y-m-d'))) }}" readonly>
                                     <input type="hidden" name="first_payment_date" id="first_payment_date" class="form-control date-picker"
                                         value="{{ old('first_payment_date') ?? displayDate($loan->first_payment_date ?? oneMonthIncrement(date('Y-m-d'))) }}">
@@ -189,10 +189,10 @@
                             </textarea>
                         </div>
                     </div>
-                   
+
                 </fieldset>
               </div>
-        
+
               {{-- Misc buttons --}}
               <div class="row">
                 <div class="col-lg-12">
@@ -244,7 +244,7 @@
 
             $('#account_number').val($tmp[0] + '/' +("000000" + $value).slice(-6));
         }
-        
+
         $("#client").on('change', function(){
             $value = $(this).val();
             $account_number = $('#account_number').val();
