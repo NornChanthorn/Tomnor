@@ -303,15 +303,16 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
               </label>
               <select name="schedule_type" id="schedule_type" class="form-control select2 select2-no-search" required
                 {{ $disabledFormType }}>
-                <!-- <option value="{{ PaymentScheduleType::EQUAL_PAYMENT }}">
-                  {{ trans('app.equal_payment') }}
-                </option> -->
-                <option value="{{PaymentScheduleType::DECLINE_INTEREST}}">
-                  {{ trans('app.down_interest_payment') }}
+                <option value="{{ PaymentScheduleType::AMORTIZATION }}">
+                  {{ trans('app.equal_payment') }} amortization
                 </option>
-                <!-- <option value="{{PaymentScheduleType::FLAT_INTEREST}}">
-                  {{ trans('app.flat_interest') }}
-                </option> -->
+                <option value="{{PaymentScheduleType::DECLINE_INTEREST}}">
+                  {{ trans('app.down_interest_payment') }} decline interest
+                </option>
+                <option value="{{PaymentScheduleType::FLAT_INTEREST}}">
+                  {{ trans('app.flat_interest') }} flat interest
+                </option>
+
                 {{--<option value="">{{ trans('app.select_option') }}</option>
                 @foreach (paymentScheduleTypes() as $typeKey => $typeTitle)
                 <option value="{{ $typeKey }}"
@@ -531,7 +532,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
     var codeLabel = '{{ trans('app.code') }}';
     var noneLabel = '{{ trans('app.none') }}';
     var formShowType = '{{ FormType::SHOW_TYPE }}';
-    var equalPaymentSchedule = '{{ PaymentScheduleType::EQUAL_PAYMENT }}';
+    var equalPaymentSchedule = '{{ PaymentScheduleType::AMORTIZATION }}';
     var flatInterestSchedule = '{{ PaymentScheduleType::FLAT_INTEREST }}';
     var declineInterestSchedule = '{{ PaymentScheduleType::DECLINE_INTEREST }}';
     var scheduleRetrievalUrl = '{{ route('loan.get_payment_schedule') }}';

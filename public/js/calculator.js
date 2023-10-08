@@ -63,6 +63,8 @@ function calcPaymentSchedules() {
       $.each(data, function (key, value) {
         grandTotalAmount += decimalNumber(value.total,2);
         totalInterest += decimalNumber(value.interest,2);
+        totalPrinciple += decimalNumber(value.principal,2);
+
         scheduleData += '<tr><td>' + ++key + '</td><td>' + value.payment_date + '</td>';
 
         if (isFlatInterestSchedule) {
@@ -82,7 +84,7 @@ function calcPaymentSchedules() {
         scheduleData += '<tr><td></td> <td></td>' +
         '<td><b>$ ' + $.number(grandTotalAmount) + '</b></td>' +
         '<td></td>' +
-        '<td><b>$ ' + $.number(totalInterest) + '</b></td>' +
+        '<td><b>$' + $.number(grandTotalAmount) + '</b></td>' +
         '<td></td></tr>';
 
       }

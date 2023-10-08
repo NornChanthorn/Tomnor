@@ -146,7 +146,7 @@ $(function () {
       },
       success: function (data) {
         var isFlatInterestSchedule = (scheduleType == flatInterestSchedule);
-        var grandTotalAmount = totalInterest = 0;
+        var grandTotalAmount = totalInterest = totalPrinciple= 0;
         var scheduleData = '<thead><tr><th>' + noLabel + '</th><th>' + paymentDateLabel + '</th>';
 
         if (isFlatInterestSchedule) {
@@ -163,6 +163,8 @@ $(function () {
         $.each(data, function (key, value) {
           grandTotalAmount += decimalNumber(value.total,2);
           totalInterest += decimalNumber(value.interest);
+          totalPrinciple += decimalNumber(value.principal);
+
           scheduleData += '<tr><td>' + ++key + '</td><td>' + value.payment_date + '</td>';
 
           if (isFlatInterestSchedule) {
@@ -181,7 +183,7 @@ $(function () {
         if (!isFlatInterestSchedule) {
           scheduleData += '<tr><td></td> <td></td>' +
           '<td><b>$ ' + $.number(grandTotalAmount) + '</b></td>' +
-          '<td></td>' +
+          '<td><b>$ ' + $.number(totalPrinciple) + '</b></td>' +
           '<td><b>$ ' + $.number(totalInterest) + '</b></td>' +
           '<td></td></tr>';
         }

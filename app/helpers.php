@@ -801,7 +801,7 @@ if (!function_exists('paymentScheduleTypes')) {
     function paymentScheduleTypes($type = null)
     {
         $paymentScheduleTypes = [
-            PaymentScheduleType::EQUAL_PAYMENT => trans('app.equal_payment'),
+            PaymentScheduleType::AMORTIZATION => trans('app.equal_payment'),
             PaymentScheduleType::FLAT_INTEREST => trans('app.flat_interest'),
             PaymentScheduleType::DECLINE_INTEREST => trans('app.decline_interest'),
         ];
