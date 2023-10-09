@@ -528,6 +528,7 @@ return [
     'payment_schedule_type' => 'ប្រភេទ​តារាង​បង់ប្រាក់',
     'payment_type' => 'ប្រភេទ​នៃ​ការ​បង់ប្រាក់',
     'payment_status' => 'ស្ថានភាពបង់ប្រាក់',
+    'schedule_depreciation' => 'តារាងបង់ប្រាក់កក់',
     'payment_note' => 'ចំណាំ',
     'view_payments' => 'តារាង​បង់ប្រាក់',
     'add_payment' => 'សងប្រាក់',
