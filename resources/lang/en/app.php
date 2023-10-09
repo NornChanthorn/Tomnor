@@ -152,6 +152,7 @@ return [
     'income' => 'Income',
     'input' => 'Input',
     'installment' => 'Installment',
+    'schedule_depreciation' => 'schedule_depreciation',
     'interest' => 'Interest',
     'interest_rate' => 'Interest Rate',
     'invoice' => 'Invoice',

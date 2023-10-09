@@ -1014,8 +1014,10 @@ class LoanController extends Controller
         'alert-type' => 'warning'
       ], 403);
     }
-    $data =Depreciation::with('invoice', 'loan')->get();
-    return view('loan/contract', compact('loan', 'data'));
+    $loanId = $loan->id;
+    $data = Depreciation::where('loan_id', $loanId)->first();
+
+    return view('loan/contract', compact('data', 'loanId', 'loan'));
   }
 
   /**

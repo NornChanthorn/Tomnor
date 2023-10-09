@@ -396,20 +396,20 @@
 
                     </table>
                 </div>
-                <div class="table-responsive mt-4">
+                <!-- <div class="table-responsive mt-4">
                     <table class="table table-bordered">
                         <h4 class="text-center">
                         {{ trans('app.payment_schedule') }}
                         </h4>
                         <thead>
-                            @php
+                             @php
 
                                 $finalTotal=0;
                             @endphp
-                            {{-- @foreach ($data->DepreciationAmount as $DepreciationAmount)
+                            {{-- @foreach ($data->paid_amount as $paid_amount)
                             @php
 
-                                $finalTotal+= decimalNumber($DepreciationAmount);
+                                $finalTotal+= decimalNumber($paid_amount);
 
                             @endphp
                             @endforeach --}}
@@ -421,19 +421,20 @@
                                 <th  style="width:10%;">{{ trans('app.client_code') }}</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            @foreach ($data as $data)
+
                                 <tr>
                                     <td class="text-center">
-                                       {{ $loop->iteration }}
+
                                     </td>
                                     <td class="text-center">
-                                           {{ $data->invoice->id }}
+                                           {{ $loanId }}
                                     </td>
                                     <td  class="text-center">
-                                        $ {{decimalNumber ( $data->DepreciationAmount) }}
+                                        $ {{decimalNumber ( $data->paid_amount) }}
                                         @php
-                                             $finalTotal+= decimalNumber($data->DepreciationAmount);
+                                             $finalTotal+= decimalNumber($data->paid_amount);
                                         @endphp
                                     </td>
                                     <td  class="text-center">
@@ -444,7 +445,7 @@
                                     </td>
                                 </tr>
 
-                            @endforeach
+
                             <tr  style="background-color:#acffbf">
                                 <td colspan="2" class=" text-center ">{{ trans('app.balance') }}</td>
                                 <td colspan="2" class="text-center"> $ {{ decimalNumber($finalTotal) }}</td>
@@ -452,9 +453,14 @@
                             </tr>
 
                         </tbody>
+                        <tbody>
+                            <tr>
+                                <td>{{$loanId}}</td>
+                            </tr>
+                        </tbody>
 
                     </table>
-                </div>
+                </div> -->
                 <div class="table-responsive">
                     <h4 class="text-center">
                         {{ trans('app.payment_schedule') }}
