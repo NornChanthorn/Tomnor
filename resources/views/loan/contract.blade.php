@@ -396,14 +396,13 @@
 
                     </table>
                 </div>
-                <!-- <div class="table-responsive mt-4">
+                 <div class="table-responsive mt-4">
                     <table class="table table-bordered">
                         <h4 class="text-center">
-                        {{ trans('app.payment_schedule') }}
+                        {{ trans('app.schedule_depreciation') }}
                         </h4>
                         <thead>
                              @php
-
                                 $finalTotal=0;
                             @endphp
                             {{-- @foreach ($data->paid_amount as $paid_amount)
@@ -418,49 +417,57 @@
                                 <th style="width:30%;">{{ trans('app.payment_date') }}</th>
                                 <th style="width:10%;">{{ trans('app.amount') }}</th>
                                 <th  style="width:10%;">{{ trans('app.payment_method') }}</th>
-                                <th  style="width:10%;">{{ trans('app.client_code') }}</th>
                             </tr>
                         </thead>
 
                         <tbody>
 
+                            @foreach ($invoice as $key =>$invoice)
                                 <tr>
                                     <td class="text-center">
-
+                                        {{$key +1}}
                                     </td>
                                     <td class="text-center">
-                                           {{ $loanId }}
+                                    {{ \Carbon\Carbon::parse($invoice->payment_date)->format('Y-m-d') }}
                                     </td>
                                     <td  class="text-center">
-                                        $ {{decimalNumber ( $data->paid_amount) }}
-                                        @php
-                                             $finalTotal+= decimalNumber($data->paid_amount);
-                                        @endphp
+                                        {{$invoice->payment_amount}}
                                     </td>
+                                    @if($invoice->payment_method == 'b')
                                     <td  class="text-center">
-                                         {{ $data->payment_method }}
+                                       {{trans('app.bank')}}
                                     </td>
-                                     <td  class="text-center">
-                                        {{ $data->loan->client_code }}
+                                    @elseif($invoice->payment_method == 'dp')
+                                    <td class="text-center">
+                                        {{trans('app.direct_payment')}}
                                     </td>
+                                    @elseif($invoice->payment_method == 'tm')
+                                    <td class="text-center">
+                                        {{trans('app.truemoney')}}
+                                    </td>
+                                    @elseif($invoice->payment_method == 'em')
+                                    <td class="text-center">
+                                        {{trans('app.emoney')}}
+                                    </td>
+                                    @else
+                                    <td class="text-center">
+                                        {{trans('app.wing')}}
+                                    </td>
+                                    @endif
                                 </tr>
 
-
+                            @endforeach
                             <tr  style="background-color:#acffbf">
-                                <td colspan="2" class=" text-center ">{{ trans('app.balance') }}</td>
-                                <td colspan="2" class="text-center"> $ {{ decimalNumber($finalTotal) }}</td>
-
+                                <td colspan="2" class=" text-center ">{{ trans('app.total_paid_amount') }}</td>
+                                <td colspan="2" class="text-center"> $ {{ decimalNumber($data->paid_amount) }}</td>
                             </tr>
-
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>{{$loanId}}</td>
+                              <tr  style="background-color:#acffbf">
+                                <td colspan="2" class=" text-center ">{{ trans('app.due_amount') }}</td>
+                                <td colspan="2" class="text-center"> $ {{ decimalNumber($data->outstanding_amount) }}</td>
                             </tr>
                         </tbody>
-
                     </table>
-                </div> -->
+                </div>
                 <div class="table-responsive">
                     <h4 class="text-center">
                         {{ trans('app.payment_schedule') }}

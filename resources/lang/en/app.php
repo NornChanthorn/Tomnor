@@ -362,6 +362,7 @@ return [
     'total' => 'Total',
     'sub_total' => 'Sub total',
     'total_amount' => 'Total Amount',
+    'total_paid_amount' => 'Total Paid Amount',
     'total_amount_oversale' => 'Total Oversale Amount',
     'total_cost' => 'Total Cost',
     'total_commission' => 'Total Commission',
