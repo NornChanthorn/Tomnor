@@ -1014,10 +1014,13 @@ class LoanController extends Controller
         'alert-type' => 'warning'
       ], 403);
     }
+
     $loanId = $loan->id;
+    $invoice = Invoice::where('loan_id', $loanId)
+    ->where('type','depreciation')->get();
     $data = Depreciation::where('loan_id', $loanId)->first();
 
-    return view('loan/contract', compact('data', 'loanId', 'loan'));
+    return view('loan/contract', compact('data', 'loanId', 'loan', 'invoice'));
   }
 
   /**

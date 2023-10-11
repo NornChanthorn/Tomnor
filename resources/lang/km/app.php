@@ -386,6 +386,7 @@ return [
     'total' => 'សរុប',
     'sub_total' => 'សរុប',
     'total_amount' => 'ទឺកប្រាក់​សរុប',
+    'total_paid_amount' => 'ទឹកប្រាក់បានបង់សរុប',
     'total_amount_oversale' => 'ទឺកប្រាក់​សរុបទំនិញលក់លើស',
     'total_cost' => 'តម្លៃ​សរុប',
     'total_commission' => 'កម្រៃ​ជើងសារ​សរុប',
