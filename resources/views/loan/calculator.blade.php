@@ -21,7 +21,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
 <main class="app-content">
   <div class="tile">
-   <h1>Calculation loan</h1>
     <h3 class="page-heading">{{ trans('app.calculate_loan') }}</h3>
     @include('partial/flash-message')
     <form id="calculator-form" action="{{ route('loan.get_payment_schedule') }}">
@@ -150,7 +149,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
               {{-- Calculate payment schedule button --}}
               <div class="col-lg-12 text-center">
                 <button type="button calculate_payment_schedule" type="submit" id="calculate-payment" class="btn btn-info">
-                  {{ trans('app.') }}
+                  {{ trans('app.calculate_loan') }}
                 </button>
               </div>
             </div>
@@ -158,7 +157,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
             {{-- Payment schedule table --}}
             <div class="row">
-                <h1>Schedule</h1>
               <div class="col-lg-12 table-responsive" id="print-table">
                 <table style="display: none;" id="schedule-table" class="table table-bordered table-hover table-striped">
                 </table>
