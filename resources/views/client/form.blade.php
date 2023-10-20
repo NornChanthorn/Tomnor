@@ -18,7 +18,7 @@
 
   <main class="app-content">
     <div class="tile">
-      <p>It from cliend.form</p>
+     
 
       <h3 class="page-heading">{{ trans('app.client') . ' - ' . $title }}</h3>
       @include('partial/flash-message')
