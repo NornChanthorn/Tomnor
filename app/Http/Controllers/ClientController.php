@@ -222,7 +222,15 @@ class ClientController extends Controller
         session()->flash(Message::SUCCESS_KEY, trans('message.item_saved_success'));
       }
       else {
+        // session()->flash(Message::ERROR_KEY, trans('message.item_saved_fail'));
+         // If the client save operation fails, display an error message
         session()->flash(Message::ERROR_KEY, trans('message.item_saved_fail'));
+
+        // Optionally, you can also flash the validation errors
+        session()->flash('errors', $client->errors()); // Use the appropriate method for your model to retrieve errors
+
+        // Redirect back to the form with an error message
+        return redirect()->back();
       }
 
       return redirect(route('client.index'));
