@@ -9,6 +9,7 @@
     <main class="app-content">
         <div class="tile">
             <h3 class="page-heading">{{ $title  }}</h3>
+            <p>{{$paidInterest}}</p>
             @include('partial/flash-message')
             <form method="post" id="payment-form" class="no-auto-submit" action="{{ route('repayment.save', $loan->id) }}" enctype="multipart/form-data">
                 @csrf
@@ -289,6 +290,12 @@
                                     <th>
                                         {{ trans('app.payment_date') }}
                                     </th>
+                                    <th>
+                                        {{ trans('app.paid_principal') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('app.paid_interest') }}
+                                    </th>
 
                                     <th>
                                         {{ trans('app.payment_amount') }}
@@ -320,6 +327,12 @@
                                         </td>
                                         <td>
                                             {{ displayDate($item->payment_date) }}
+                                        </td>
+                                        <td>
+                                            $ {{ decimalNumber($item->paid_principle) }}
+                                        </td>
+                                        <td>
+                                            $ {{ decimalNumber($item->paid_interest) }}
                                         </td>
                                         <td>
                                             $ {{ decimalNumber($item->total) }}

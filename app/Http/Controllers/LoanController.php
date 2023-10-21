@@ -835,23 +835,23 @@ class LoanController extends Controller
 
       // Create Invoice
 
-      if($transaction->status == 'final' && $status == LoanStatus::ACTIVE){
-        $invoice = new Invoice();
-        $invoice->type              = 'leasing-dp';
-        $invoice->user_id           = auth()->user()->id;
-        $invoice->loan_id           = $loan->id;
-        $invoice->transaction_id    = $transaction->id;
-        $invoice->client_id         = $loan->client->id;
-        $invoice->payment_amount    = $loan->depreciation_amount;
-        $invoice->total             = $loan->depreciation_amount;
-        // $invoice->payment_method    = $loan->payment_method;
-        $invoice->payment_date      = date('Y-m-d');
-        $invoice->note              = $loan->note;
+    //   if($transaction->status == 'final' && $status == LoanStatus::ACTIVE){
+    //     $invoice = new Invoice();
+    //     $invoice->type              = 'leasing-dp';
+    //     $invoice->user_id           = auth()->user()->id;
+    //     $invoice->loan_id           = $loan->id;
+    //     $invoice->transaction_id    = $transaction->id;
+    //     $invoice->client_id         = $loan->client->id;
+    //     $invoice->payment_amount    = $loan->depreciation_amount;
+    //     $invoice->total             = $loan->depreciation_amount;
+    //     // $invoice->payment_method    = $loan->payment_method;
+    //     $invoice->payment_date      = date('Y-m-d');
+    //     $invoice->note              = $loan->note;
 
-        $lastInvoiceNum = Invoice::latest()->first()->invoice_number ?? 0;
-        $invoice->invoice_number = 'REF-' . str_pad(substr($lastInvoiceNum, 4) + 1, 6, 0, STR_PAD_LEFT);
-        $invoice->save();
-      }
+    //     $lastInvoiceNum = Invoice::latest()->first()->invoice_number ?? 0;
+    //     $invoice->invoice_number = 'REF-' . str_pad(substr($lastInvoiceNum, 4) + 1, 6, 0, STR_PAD_LEFT);
+    //     $invoice->save();
+    //   }
       DB::commit();
 
       if ($status == LoanStatus::ACTIVE) {
