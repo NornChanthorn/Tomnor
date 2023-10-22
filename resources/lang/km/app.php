@@ -429,7 +429,8 @@ return [
     'select_date_range' => 'ជ្រើសរើសកាលបរិច្ឆេទ',
     'due_amount' => 'ទឹកប្រាក់នៅសល់',
     'reschedule' => 'រៀបតារាងឡើងវិញ',
-
+    'product_installment' => 'បង់រំលោះផលិតផល',
+    'mortgage_loan' => 'កម្ចី-បញ្ចាំ',
     'today' => 'ថ្ងៃនេះ',
     'yesterday' => 'ម្សិលមិញ',
     'last_7_days' => '៧ ថ្ងៃមុន',
