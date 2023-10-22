@@ -37,7 +37,7 @@
       <ul class="treeview-menu">
         @permission('supplier.browse')
         {{-- Supplier --}}
- 
+
         <li>
           <a class="treeview-item {{ Request::get('type')=='supplier' ? 'active' : '' }}" href="{{ route('contact.index', ['type'=>'supplier']) }}">
             <i class="icon fa fa-address-book"></i>{{ trans('app.supplier') }}
@@ -143,16 +143,16 @@
             {{-- Loan --}}
             <li>
               <a class="treeview-item {{ activeMenu('loan') }}" href="{{ route('loan.index') }}">
-                <i class="icon fa fa-money pr-1"></i>{{ trans('app.loan_product') }}
+                <i class="icon fa fa-money pr-1"></i>{{ trans('app.product_installment') }}
               </a>
             </li>
             {{-- Loan Cash--}}
-           
+
           @endpermission
           @permission('loan-cash.browse')
             <li>
               <a class="treeview-item {{ activeMenu('loan-cash') }}" href="{{ route('loan-cash.index') }}">
-                <i class="icon fa fa-money pr-1"></i>{{ trans('app.loan_cash') }}
+                <i class="icon fa fa-money pr-1"></i>{{ trans('app.mortgage_loan') }}
               </a>
             </li>
           @endpermission
@@ -213,10 +213,10 @@
               </a>
             </li>
           @endforeach
-          
+
         </ul>
       </li>
-    
+
     @endpermission
     @permission('purchase-return.browse')
     <li>

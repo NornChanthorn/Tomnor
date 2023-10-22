@@ -1137,16 +1137,79 @@ class LoanController extends Controller
   {
     echo generateRegisterId($request->branch, $request->count);
   }
-  public function delaySchedule(Request $request, Loan $loan){
-    if(!isAdmin() && !Auth::user()->can('loan.delay-schedule')) {
-      return back()->with([
-        Message::ERROR_KEY => trans('message.no_permission'),
-        'alert-type' => 'warning'
-      ], 403);
+//   public function delaySchedule(Request $request, Loan $loan){
+//     if(!isAdmin() && !Auth::user()->can('loan.delay-schedule')) {
+//       return back()->with([
+//         Message::ERROR_KEY => trans('message.no_permission'),
+//         'alert-type' => 'warning'
+//       ], 403);
+//     }
+//     $schedule_reference = new  ScheduleReference();
+//     return view('loan.delay-schedule',compact('loan','schedule_reference'));
+//   }
+    public function ReSchedule(ScheduleReference $scheduleReference,Loan $loan){
+
+        if(!isAdmin() && !Auth::user()->can('loan.delay-schedule')) {
+            return back()->with([
+            Message::ERROR_KEY => trans('message.no_permission'),
+            'alert-type' => 'warning'
+            ], 403);
+        }
+
+        $loanId= $loan->id;
+        $depreciation = Depreciation::where('loan_id', $loanId)->first();
+
+        $schedule_reference = new  ScheduleReference();
+        return view('loan.delay-schedule',compact('loan','schedule_reference', 'depreciation'));
+
     }
-    $schedule_reference = new  ScheduleReference();
-    return view('loan.delay-schedule',compact('loan','schedule_reference'));
-  }
+    public function SaveReschedule(Request $request, Loan $loan){
+        if(!isAdmin() && !Auth::user()->can('loan.delay-schedule')) {
+            return back()->with([
+              Message::ERROR_KEY => trans('message.no_permission'),
+              'alert-type' => 'warning'
+            ], 403);
+        }
+        $loan->status = LoanStatus::PAID;
+        $loan->save();
+
+        $loanId= $loan->id;
+        $depreciation = Depreciation::where('loan_id', $loanId)->first();
+        $remainDepreciation = $depreciation->outstanding;
+        $loanAmount = $loan->loan_amount;
+        $totalAmount = $loanAmount + $remainDepreciation;
+
+        $Newloan = new Loan();
+        $Newloan->type                  =$loan->type;
+        $Newloan->client_id             =$loan->client_id;
+        $Newloan->user_id               =$loan->user_id;
+        $Newloan->product_id            =$loan->product_id;
+        $Newloan->variantion_id         =$loan->variantion_id;
+        $Newloan->product_code          =$loan->product_code;
+        $Newloan->product_name          =$loan->product_name;
+        $Newloan->product_price         =$loan->product_price;
+        $Newloan->product_name          =$loan->product_name;
+        $Newloan->product_price         =$loan->product_price;
+        $Newloan->loan_amount           =$totalAmount;
+        $Newloan->interest_rate         =$request->interest_rate;
+        $Newloan->first_payment_date    =$loan->first_payment_date;
+        $Newloan->first_payment_date    =$loan->first_payment_date;
+        $Newloan->status                =LoanStatus::ACTIVE;
+        $Newloan->save();
+
+        $paymentSchedules = $this->calcPaymentSchedule($request);
+        foreach ($paymentSchedules as $paymentSchedule) {
+            $schedule = new Schedule();
+            $schedule->loan_id = $Newloan->id;
+            $schedule->payment_date = $paymentSchedule['payment_date'];
+            $schedule->principal = $paymentSchedule['principal'];
+            $schedule->interest = $paymentSchedule['interest'];
+            $schedule->total = $paymentSchedule['principal'] + $paymentSchedule['interest'];
+            $schedule->outstanding = $paymentSchedule['outstanding'];
+            $schedule->save();
+        }
+
+    }
   public function delayScheduleSave(Request $request, Loan $loan){
     if(!isAdmin() && !Auth::user()->can('loan.delay-schedule')) {
       return back()->with([
@@ -1185,6 +1248,7 @@ class LoanController extends Controller
     }
     return view('loan.getDelayStatus',compact('scheduleReference'));
   }
+
   public function delayStatus(ScheduleReference $scheduleReference){
     if(!isAdmin() && !Auth::user()->can('loan.approved-delay-schedule')) {
       return back()->with([
@@ -1229,12 +1293,9 @@ class LoanController extends Controller
             if($key!=0){
               $lastSchedule = oneMonthIncrement($lastSchedule,  $day);
             }
-
             $schedule->payment_date = $lastSchedule;
             $schedule->save();
-
           }
-
         }
       }
       if($scheduleReference->type == 'ip'){
