@@ -1158,9 +1158,12 @@ class LoanController extends Controller
 
         $loanId= $loan->id;
         $depreciation = Depreciation::where('loan_id', $loanId)->first();
+        $remainDepreciation = $depreciation->outstanding_amount;
+        $loanAmount = $loan->loan_amount;
+        $totalAmount = $loanAmount+ $remainDepreciation;
 
         $schedule_reference = new  ScheduleReference();
-        return view('loan.delay-schedule',compact('loan','schedule_reference', 'depreciation'));
+        return view('loan.delay-schedule',compact('loan','schedule_reference', 'depreciation', 'totalAmount'));
 
     }
     public function SaveReschedule(Request $request, Loan $loan){

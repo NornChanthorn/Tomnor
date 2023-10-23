@@ -13,12 +13,22 @@
 
         <div class="modal-body">
           <div class="row">
+            {{--Loan Amountc--}}
             <div class="col-md-4 form-group">
               <label for="">{{ __("app.loan_amount") }}</label>
-              <input type="text" class="form-control date-picker" value="{{ displayDate(now()) }}">
+              <input type="text" class="form-control date-picker" value="{{ $totalAmount}}" disabled >
+            </div>
+            {{-- Interest rate --}}
+            <div class="col-lg-4 form-group">
+              <label for="interest_rate" class="control-label">
+                <span id="rate_text">{{ trans('app.interest_rate') }}</span> (%)
+                <span id="rate_sign" class="required"></span>
+              </label>
+              <input type="text" name="interest_rate" id="interest_rate" class="form-control decimal-input"
+                value="{{ old('interest_rate') ?? $loan->interest_rate }}" required min="0" >
             </div>
             <div class="col-md-4 form-group">
-              <label for="">{{ __("app.next_payment_date") }}</label>
+              <label for="">{{ __("app.first_payment_date") }}</label>
               <input type="text" class="form-control date-picker" value="{{ oneMonthIncrement(date('Y-m-d')) }}">
             </div>
             <div class="col-md-4 form-group">
@@ -29,9 +39,35 @@
                     {{ $item }}
                   </option>
                 @endforeach
-
               </select>
               <input type="hidden" name="frequency" value="30">
+            </div>
+            {{-- Payment schedule type --}}
+            <div class="col-lg-4 form-group">
+              <label for="schedule_type" class="control-label">
+                {{ trans('app.payment_schedule_type') }}
+              </label>
+              <select name="schedule_type" id="schedule_type" class="form-control select2 select2-no-search" required
+              >
+                <option value="{{ PaymentScheduleType::AMORTIZATION }}">
+                  {{ trans('app.equal_payment') }} amortization
+                </option>
+                <option value="{{PaymentScheduleType::DECLINE_INTEREST}}">
+                  {{ trans('app.down_interest_payment') }} decline interest
+                </option>
+                <option value="{{PaymentScheduleType::FLAT_INTEREST}}">
+                  {{ trans('app.flat_interest') }} flat interest
+                </option>
+
+                {{--<option value="">{{ trans('app.select_option') }}</option>
+                @foreach (paymentScheduleTypes() as $typeKey => $typeTitle)
+                <option value="{{ $typeKey }}"
+                  {{ !is_null(old('schedule_type')) ? (old('schedule_type') == $typeKey ? 'selected' : '') : ($loan->schedule_type == $typeKey ? 'selected' : '') }}>
+                  {{ $typeTitle }}
+                </option>
+
+                @endforeach--}}
+              </select>
             </div>
             <div class="col-md-4 form-group">
               <label for="">{{ __("app.installment") }}</label>
@@ -55,9 +91,9 @@
           </div>
         </div>
         <div class="col-lg-12 text-center">
-              <button type="button" id="calculate-payment" class="btn btn-info">
+            <button type="button" id="calculate-payment" class="btn btn-info">
                 {{ trans('app.calculate_payment_schedule') }}
-              </button>
+            </button>
         </div>
         <br>
 
