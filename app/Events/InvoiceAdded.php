@@ -21,6 +21,5 @@ class InvoiceAdded
     public function __construct(Invoice $invoice, $formInput = [])
     {
         $this->invoice = $invoice;
-        $this->formInput = $formInput;
     }
 }
