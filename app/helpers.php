@@ -701,7 +701,7 @@ if (!function_exists('offset')) {
     function offset($currentPage)
     {
         $currentPage = $currentPage ?? 1;
-        $offset = (paginationCount() * $currentPage) - (paginationCount() - 1);
+        $offset = (paginationCount() ) - (paginationCount() - 1);
 
         return $offset;
     }
@@ -720,7 +720,7 @@ if (!function_exists('paymentMethods')) {
         $paymentMethods = ExtendedProperty::where('group_name','payment_methods')->pluck('value','property_name')->toArray();
 
         if ($key === null) {
-            return $paymentMethods;
+
         }
 
         return $paymentMethods[$key] ?? trans('app.n/a');

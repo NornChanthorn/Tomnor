@@ -1,8 +1,6 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <p>Reschedule by id {{$loan->id}}</p>
-      <p>Loan Status : {{$loan->status}}</p>
-      <p>{{$depreciation->id}}</p>
+
       <form method="post" id="add_form" class="no-auto-submit" action="{{ route('loan.saveDelaySchedule', $loan) }}">
         @csrf
         <input type="hidden" name="schedule_reference_id"  value="{{ $schedule_reference->id }}">
@@ -54,25 +52,9 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-12 text-center">
-              <button type="button" id="calculate-payment" class="btn btn-info">
-                {{ trans('app.calculate_payment_schedule') }}
-              </button>
-        </div>
+
         <br>
 
-        {{-- Payment schedule table --}}
-        <div class="row">
-            <div class="col-lg-12 table-responsive" id="print-table">
-                <table style="display: none;" id="schedule-table" class="table table-bordered table-hover table-striped">
-                </table>
-            </div>
-            <div class="col-lg-12">
-                <button type="button" style="display: none;" id="print" class="btn btn-info">
-                {{ trans('app.print') }}
-                </button>
-            </div>
-        </div>
 
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> @lang('app.save')</button>

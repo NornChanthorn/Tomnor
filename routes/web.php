@@ -169,10 +169,6 @@ Route::middleware(['auth'])->group(function () {
   Route::prefix('loan')->name('loan.')->group(function () {
     Route::post('save/{loan?}', 'LoanController@save')->name('save');
     Route::post('ajax/payment-schedule', 'LoanController@getPaymentSchedule')->name('get_payment_schedule');
-    Route::get('{schedule}/payment-schedule/edit', 'LoanController@editPaymentSchedule')->name('edit_payment_schedule');
-    Route::post('{schedule}/payment-schedule/update', 'LoanController@updatePaymentSchedule')->name('update_payment_schedule');
-    Route::post('change-status/{loan}/{status}', 'LoanController@changeStatus')->name('change_status');
-
     Route::get('{loan}/disburse', 'LoanController@disburse')->name('disburse');
     Route::get('{loan}/contract', 'LoanController@printContract')->name('print_contract');
     Route::get('{loan}/payment-schedule', 'LoanController@printPaymentSchedule')->name('print_payment_schedule');
@@ -205,8 +201,6 @@ Route::middleware(['auth'])->group(function () {
   Route::prefix('repayment')->name('repayment.')->group(function () {
     Route::get('/', 'RepaymentController@index')->name('index');
     Route::get('/list', 'RepaymentController@listRepayment')->name('list');
-    Route::get('{id}/{repayType}', 'RepaymentController@show')->name('show');
-    Route::post('{id}/save', 'RepaymentController@save')->name('save');
   });
 
 
@@ -216,13 +210,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pay-contact-due/{contact_id}', 'PaymentController@getPayContactDue')->name('getPayContactDue');
     Route::post('pay-contact-due', 'PaymentController@postPayContactDue')->name('savePayContactDue');
     Route::get('show/{id}', 'PaymentController@show')->name('show');
-    Route::get('/view-payment/{payment_id}', 'PaymentController@viewPayment')->name('viewPayment');
-    Route::get('payment-date/{payment}', 'PaymentController@editPaymentDate')->name('editPaymentDate');
     Route::post('payment-date/{payment}', 'PaymentController@savePaymentDate')->name('savePaymentDate');
-
-    Route::post('save/{id}', 'PaymentController@save')->name('save');
-    Route::delete('delete/{id}', 'PaymentController@destroy')->name('destroy');
-    Route::get('/{id}/{repayType}', 'DepreciationController@show')->name('paydepreciation');
     Route::post('/{id}/save', 'DepreciationController@save')->name('savedepreciation');
 
   });
@@ -230,8 +218,7 @@ Route::middleware(['auth'])->group(function () {
 
   // Agent commission payment
   Route::prefix('commission-payment')->name('commission-payment.')->group(function () {
-    Route::get('', 'CommissionPaymentController@index')->name('index');
-    Route::post('save', 'CommissionPaymentController@save')->name('save');
+
     Route::post('{staffId}/get-commission', 'CommissionPaymentController@getAgentCommissionInfo')->name('get_agent_commission_info');
   });
 
