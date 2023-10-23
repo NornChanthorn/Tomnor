@@ -177,7 +177,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('{loan}/contract', 'LoanController@printContract')->name('print_contract');
     Route::get('{loan}/payment-schedule', 'LoanController@printPaymentSchedule')->name('print_payment_schedule');
     Route::get('{loan}/invoice', 'LoanController@invoice')->name('invoice');
-    Route::get('{loan}/delay-schedule', 'LoanController@delaySchedule')->name('delaySchedule');
+    Route::get('{loan}/delay-schedule', 'LoanController@ReSchedule')->name('ReSchedule');
     Route::post('{loan}/delay-schedule', 'LoanController@delayScheduleSave')->name('saveDelaySchedule');
 
     Route::get('{scheduleReference}/get-delay-status', 'LoanController@getDelayStatus')->name('getDelayStatus');

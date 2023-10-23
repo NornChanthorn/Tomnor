@@ -21,7 +21,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
 <main class="app-content">
   <div class="tile">
-    <!-- {{PaymentScheduleType::EQUAL_PAYMENT}} -->
     <h3 class="page-heading">{{ trans('app.loan') . ' - ' . $title }}</h3>
     @include('partial/flash-message')
     <form id="loan-form" method="post" class="no-auto-submit" action="{{ route('loan.save', $loan) }}">
@@ -304,15 +303,16 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
               </label>
               <select name="schedule_type" id="schedule_type" class="form-control select2 select2-no-search" required
                 {{ $disabledFormType }}>
-                <!-- <option value="{{ PaymentScheduleType::EQUAL_PAYMENT }}">
-                  {{ trans('app.equal_payment') }}
-                </option> -->
-                <option value="{{PaymentScheduleType::DECLINE_INTEREST}}">
-                  {{ trans('app.down_interest_payment') }}
+                <option value="{{ PaymentScheduleType::AMORTIZATION }}">
+                  {{ trans('app.equal_payment') }} amortization
                 </option>
-                <!-- <option value="{{PaymentScheduleType::FLAT_INTEREST}}">
-                  {{ trans('app.flat_interest') }}
-                </option> -->
+                <option value="{{PaymentScheduleType::DECLINE_INTEREST}}">
+                  {{ trans('app.down_interest_payment') }} decline interest
+                </option>
+                <option value="{{PaymentScheduleType::FLAT_INTEREST}}">
+                  {{ trans('app.flat_interest') }} flat interest
+                </option>
+
                 {{--<option value="">{{ trans('app.select_option') }}</option>
                 @foreach (paymentScheduleTypes() as $typeKey => $typeTitle)
                 <option value="{{ $typeKey }}"
@@ -332,7 +332,6 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
                 value="{{ old('loan_amount') ?? $loan->loan_amount }}" readonly>
             </div>
 
-
             {{-- Depreciation amount --}}
             <div class="col-lg-4 form-group">
               <label for="depreciation_amount" class="control-label">
@@ -344,7 +343,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
 
           </div>
           <div class="row">
-            {{-- Payment Method --}}
+            <!-- {{-- Payment Method --}}
             <div class="col-lg-4 form-group">
               <label for="payment_method" class="control-label">
                 {{ trans('app.payment_method') }} <span class="required">*</span>
@@ -356,7 +355,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
                   </option>
                 @endforeach
               </select>
-            </div>
+            </div> -->
             {{-- Down payment amount --}}
             <div class="col-lg-4 form-group">
               <label for="down_payment_amount" class="control-label">
@@ -533,7 +532,7 @@ $requiredFormType = ($formType != FormType::SHOW_TYPE ? '<span class="required">
     var codeLabel = '{{ trans('app.code') }}';
     var noneLabel = '{{ trans('app.none') }}';
     var formShowType = '{{ FormType::SHOW_TYPE }}';
-    var equalPaymentSchedule = '{{ PaymentScheduleType::EQUAL_PAYMENT }}';
+    var equalPaymentSchedule = '{{ PaymentScheduleType::AMORTIZATION }}';
     var flatInterestSchedule = '{{ PaymentScheduleType::FLAT_INTEREST }}';
     var declineInterestSchedule = '{{ PaymentScheduleType::DECLINE_INTEREST }}';
     var scheduleRetrievalUrl = '{{ route('loan.get_payment_schedule') }}';

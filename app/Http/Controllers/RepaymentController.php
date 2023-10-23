@@ -173,6 +173,7 @@ class RepaymentController extends Controller
     $payoffInterest = null;
     $payoffPrincipal = null;
     $remainingAmount = null;
+    $paidInterest = null;
     if ($repayType == RepayType::PAYOFF) {
       $title = trans('app.payoff');
       $repayLabel = trans('app.pay_off');
@@ -195,6 +196,8 @@ class RepaymentController extends Controller
       $repayLabel = trans('app.repay');
       $unpaidSchedules = Schedule::where('loan_id', $loanId)->where('paid_status', 0)->orderBy('payment_date')->get();
       $unpaidInterestSchedules = Schedule::where('loan_id', $loanId)->where('paid_status', 0)->get();
+      $
+      $paidInterest = $unpaidInterestSchedules;
       $amountUnpaid=Schedule::where('loan_id', $loanId)->where('paid_status', 0)->orderBy('payment_date')->first();
       $remainingAmount =  ($amountUnpaid->principal + $amountUnpaid->interest)-($amountUnpaid->paid_principal + $amountUnpaid->paid_interest);
     }
@@ -205,6 +208,7 @@ class RepaymentController extends Controller
       'payoffPrincipal',
       'penaltyAmount',
       'remainingAmount',
+      'paidInterest',
       'repayLabel',
       'repayType',
       'title'
@@ -311,6 +315,7 @@ class RepaymentController extends Controller
     }
     elseif ($repayType == RepayType::REPAY) {
       $remainingAmount = ($loan->schedules->sum('total') - $loan->schedules->sum('paid_total'));
+
       if ($paymentAmount >= $remainingAmount) {
         session()->flash(Message::ERROR_KEY, trans('message.payment_amount_lt_or_et_remaining_amount', [
           'amount' => decimalNumber($remainingAmount),
@@ -392,7 +397,9 @@ class RepaymentController extends Controller
     $invoice->payment_method    = $request->payment_method;
     $invoice->reference_number  = $request->reference_number;
     $invoice->payment_date      = $paymentDate;
+    $invoice->paid_interest     =  $schedule->paid_interest;
     $invoice->note              = $request->note;
+    $invoice->paid_principle    = ($originalPaymentAmount - $schedule->paid_interest);
     if (!empty($request->receipt_photo)) {
       $invoice->document = $this->uploadImage($this->imageFolder, $request->receipt_photo);
     }

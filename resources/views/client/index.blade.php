@@ -3,7 +3,6 @@
 @section('content')
     <main class="app-content">
         <div class="tile">
-            <p>It from client.index</p>
             <h3 class="page-heading">{{ trans('app.client') }}</h3>
             @include('partial/flash-message')
             <div class="card">

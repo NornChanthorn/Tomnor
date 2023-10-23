@@ -135,123 +135,9 @@ class DepreciationController extends Controller
           ->find($loanId);
 
           $repayType = $request->repay_type;
-        //   if($repayType ==2){
-        //     $originalPaymentAmount = $request->payment_amount - $request->penalty_amount + $request->wave;
-        //     $penaltyAmount = $request->penalty_amount;
-        //   }else{
-        //     $paymentAmount = $originalPaymentAmount = $request->payment_amount;
-        //     $penaltyAmount = $request->penalty_amount;
-        //   }
+
           $wave = $request->wave ?? 0;
           $paymentDate = dateIsoFormat($request->payment_date);
-
-          // Payoff, advance payment, or simple payment for 3 schedule types: decline, flat, or equal payment
-        //   if ($repayType == RepayType::PAYOFF) {
-        //     $i = 0;
-        //     foreach ($loan->schedules as $schedule) {
-        //       if ($i == 0) {
-        //         $schedule->paid_interest = $schedule->interest;
-        //         $schedule->paid_total = $schedule->total;
-        //       }
-        //       else {
-        //         $schedule->paid_interest = 0;
-        //         $schedule->paid_total = $schedule->principal;
-        //       }
-
-        //       $schedule->paid_principal = $schedule->principal;
-        //       $schedule->paid_date = $paymentDate;
-        //       $schedule->paid_status = 1;
-        //       $schedule->save();
-        //       $i++;
-        //     }
-        //     $loan->status = LoanStatus::PAID;
-        //     $loan->save();
-        //   }
-        //   elseif ($repayType == RepayType::ADVANCE_PAY) {
-        //     $amountToPay = $loan->schedules->sum('principal');
-        //     if (decimalNumber($paymentAmount) != decimalNumber($amountToPay)) {
-        //       session()->flash(Message::ERROR_KEY, trans('message.selected_schedule_amount_unequal'));
-        //       return back()->withInput($request->all());
-        //     }
-
-        //     foreach ($loan->schedules as $schedule) {
-        //       $schedule->paid_principal = $schedule->principal;
-        //       $schedule->paid_total = $schedule->principal;
-        //       $schedule->paid_date = $paymentDate;
-        //       $schedule->paid_status = 1;
-        //       $schedule->save();
-        //     }
-
-        //     // Code to change loan status to paid if all schedules are paid
-        //     // This payment type isn't used in this system at this time
-        //   }
-        //   elseif ($repayType == RepayType::REPAY) {
-        //     $remainingAmount = ($loan->schedules->sum('total') - $loan->schedules->sum('paid_total'));
-        //     if ($paymentAmount >= $remainingAmount) {
-        //       session()->flash(Message::ERROR_KEY, trans('message.payment_amount_lt_or_et_remaining_amount', [
-        //         'amount' => decimalNumber($remainingAmount),
-        //       ]));
-        //       return back()->withInput($request->all());
-        //     }
-
-        //     // foreach ($loan->schedules as $key => $schedule) {
-        //     //   // Pay interest
-        //     //   if($loan->schedule_type != PaymentScheduleType::FLAT_INTEREST && $paymentAmount > 0 && $schedule->paid_interest < $schedule->interest) {
-        //     //     $paidInterestAmount = $schedule->paid_interest;
-        //     //     $newInterestAmount = ($paidInterestAmount + $paymentAmount);
-
-        //     //     if ($newInterestAmount >= $schedule->interest) {
-        //     //       if($schedule->interest>0){
-        //     //         $schedule->paid_interest = $schedule->interest;
-        //     //       }
-
-        //     //       $paymentAmount -= ($schedule->interest - $paidInterestAmount);
-        //     //     }
-        //     //     else {
-        //     //       if($newInterestAmount>0){
-        //     //         $schedule->paid_interest = decimalNumber($newInterestAmount);
-        //     //       }
-
-        //     //       $paymentAmount = 0;
-        //     //     }
-        //     //   }
-        //     //   // Pay principal
-        //     //   if ($paymentAmount > 0 && $schedule->paid_principal < $schedule->principal) {
-        //     //     $paidPrincipalAmount = $schedule->paid_principal;
-        //     //     $newPrincipalAmount = $paidPrincipalAmount + $paymentAmount;
-
-        //     //     if ($newPrincipalAmount >= $schedule->principal) {
-        //     //       $schedule->paid_principal = $schedule->principal;
-        //     //       $paymentAmount -= ($schedule->principal - $paidPrincipalAmount);
-        //     //     }
-        //     //     else {
-        //     //       $schedule->paid_principal = decimalNumber($newPrincipalAmount);
-        //     //       $paymentAmount = 0;
-        //     //     }
-        //     //   }
-        //     //   if($key==0 && $penaltyAmount > 0){
-        //     //     $schedule->paid_penalty = $penaltyAmount;
-        //     //     $schedule->paid_total = ($schedule->paid_principal + $schedule->paid_interest + $penaltyAmount);
-        //     //   }else{
-        //     //     $schedule->paid_total = ($schedule->paid_principal + $schedule->paid_interest);
-        //     //   }
-
-        //     //   if (($schedule->paid_total - $schedule->paid_penalty) == $schedule->total) {
-        //     //     $schedule->paid_status = 1;
-        //     //   }
-        //     //   $schedule->paid_date = $paymentDate;
-        //     //   $schedule->save();
-        //     //   if (decimalNumber($paymentAmount) <= 0.0) {
-        //     //     break;
-        //     //   }
-        //     // }
-        //     // Change loan status to paid if all schedules are paid
-        //     $unpaidSchedules = Schedule::where('paid_status', 0)->where('loan_id', $loan->id)->get();
-        //     if (count($unpaidSchedules) == 0) {
-        //       $loan->status = LoanStatus::PAID;
-        //       $loan->save();
-        //     }
-        //   }
 
           // Insert payment info into invoices table
           $invoice = new Invoice();
@@ -275,24 +161,20 @@ class DepreciationController extends Controller
           $invoice->invoice_number = 'REF-' . str_pad(substr($lastInvoiceNum, 4) + 1, 6, 0, STR_PAD_LEFT);
           $invoice->save();
 
-        //   $existingDepreciation = Depreciation::where('loan_id', $loanId)->first();
+          $newPaid = $invoice->payment_amount ;
+          $depreAmount = $loan->depreciation_amount;
+          $existingDepreciation = Depreciation::where('loan_id', $loan->id)->first();
 
-            // Depreciation::create([
-            //     'loan_id' => $loan->id, // Use the appropriate reference to the invoice
-            //     'invoice_id' => $invoice->id, // Assuming you have a 'schedule_id' column
-            //     'DepreciationAmount' => $invoice->payment_amount,
-            //     'outstanding_amount' => $invoice->payment_amount,
-            //     'payment_method' => $invoice->payment_method
-            //     // Add other fields as needed
-            //   ]);
-
-
-
+          if($existingDepreciation){
+            $oldPaidAmount = $existingDepreciation->paid_amount;
+            $updatePaidAmount = $oldPaidAmount + $newPaid;
+            $existingDepreciation->paid_amount = $updatePaidAmount;
+            $existingDepreciation->outstanding_amount= $depreAmount - $updatePaidAmount ;
+            $existingDepreciation->save();
+          }
         session()->flash(Message::SUCCESS_KEY, trans('message.repayment_success'));
         $redirectRoute = ($repayType == RepayType::PAY_DEPRECIATION ? route('payments.paydepreciation', [$loan->id, $request->repay_type]) : route('repayment.show', [$loan->id, $request->repay_type]));
         return redirect($redirectRoute);
-
-
 
     }
     public function edit(DownPayment $downPayment)
